@@ -1,0 +1,64 @@
+Navegação
+    pwd
+    ls
+    .
+    ..
+    cd
+
+ajuda
+    --help
+    man
+
+arquivo
+    touch
+    mkdir
+    rm
+    cat
+    cp
+    echo
+    "ola meu nome é"> arquivo.txt
+    "ola meu nome é">> arquivo.txt
+    head
+    tail
+    nano
+
+gerenciamento de usuarios
+    whoami
+    sudo -s
+    su root
+    passwd  root
+    adduser
+    deluser
+    userdel
+    rm -rf
+    adduser usuario grupo
+    
+
+usuario dados
+    /etc/passwd
+    nano /etc/sudoers
+    /bin/bash
+    cat /etc/group
+
+gerenciamento de pacote
+    apt update
+    apt install sotware
+    apt remove software
+    apt search fotware
+    dpkg -i software.deb
+    find diretoio / -name arquivo
+    find diretoio / -name arqu*
+    whereis
+    which
+    locate
+    updatedb
+
+Permissoes
+    chmod o+w
+    chown
+    chmod 740 
+    
+    
+    
+    
+    
