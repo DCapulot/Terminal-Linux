@@ -84,6 +84,12 @@ Para formar um sistema completo, esse kernel é combinado com outras ferramentas
 - Ajuda a entender como um computador realmente funciona
 - Domínio do **terminal** aumenta muito a produtividade
 - É uma habilidade muito valorizada no mercado
+- Não tem custo de licença
+- O Sistema Operacional mais usado no mundo
+- Código Aberto(Open Source)
+- Grande Variedades de Distribuições
+- Comunidade Ativa
+- Maior Privacidade
 
 ---
 
