@@ -1,0 +1,2712 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux Terminal · guia de comandos em português</title>
+<meta name="description" content="Guia em português dos comandos básicos do terminal Linux, com exemplos, comportamento e opções de cada comando.">
+<script>try{var t=localStorage.getItem("tema");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>:root{--bg:#f3f5f8;--fg:#14202e;--mut:#5c6877;--line:#d9e0e8;--acc:#2349c9;--code:#e4e9f0;--panel:#fff;--warn:#fff3d6;--warnl:#d9a21b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1621;--fg:#dbe3ee;--mut:#93a0b1;--line:#243044;--acc:#8fb0ff;--code:#17212f;--panel:#131c2a;--warn:#2a2412;--warnl:#d9a21b}}
+:root[data-theme="dark"]{--bg:#0f1621;--fg:#dbe3ee;--mut:#93a0b1;--line:#243044;--acc:#8fb0ff;--code:#17212f;--panel:#131c2a;--warn:#2a2412;--warnl:#d9a21b}
+*{box-sizing:border-box}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 "IBM Plex Sans",system-ui,sans-serif}
+a{color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+header{position:fixed;inset:0 0 auto;height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--bg);border-bottom:1px solid var(--line);z-index:10}
+.brand{font:600 17px "IBM Plex Mono",monospace;color:var(--fg);text-decoration:none;white-space:nowrap}
+header button{background:none;border:1px solid var(--line);color:var(--fg);border-radius:6px;width:36px;height:36px;font-size:16px;cursor:pointer}
+#menu{display:none}
+.search{position:relative;flex:1;max-width:420px;margin-left:auto}
+#q{width:100%;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg);font:14px "IBM Plex Mono",monospace}
+#res{position:absolute;top:42px;left:0;right:0;margin:0;padding:4px;list-style:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;max-height:60vh;overflow:auto}
+#res a{display:block;padding:8px 10px;border-radius:6px;color:var(--fg);text-decoration:none}
+#res a:hover,#res a:focus{background:var(--code)}
+#res b{font:600 14px "IBM Plex Mono",monospace;color:var(--acc)}
+#res small{display:block;color:var(--mut)}
+#side{position:fixed;top:56px;bottom:0;left:0;width:250px;padding:20px 12px;overflow:auto;border-right:1px solid var(--line)}
+#side a{display:block;padding:7px 12px;border-radius:6px;color:var(--mut);text-decoration:none;font-size:15px}
+#side a:hover{background:var(--code);color:var(--fg)}
+#side a[aria-current]{background:var(--code);color:var(--fg);font-weight:600;box-shadow:inset 3px 0 var(--acc)}
+main{margin-left:250px;padding:88px 32px 40px}
+#content,#pager,footer{max-width:780px}
+h1,h2,h3,code,pre,th{font-family:"IBM Plex Mono",monospace}
+h1{font-size:30px;line-height:1.2;margin:0 0 8px}
+h2{font-size:22px;margin:56px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+h2::before{content:"$ ";color:var(--acc)}
+h1+p{color:var(--mut);font-size:18px}
+#content>h2:first-of-type{margin-top:32px}
+code{font-size:.9em;background:var(--code);padding:1px 5px;border-radius:4px}
+h2 code{background:none;padding:0;font-size:1em}
+pre{position:relative;background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow:auto;font-size:14px;line-height:1.55}
+pre code{background:none;padding:0}
+.copy{position:absolute;top:8px;right:8px;font:12px "IBM Plex Sans",sans-serif;padding:3px 8px;border:1px solid var(--line);border-radius:5px;background:var(--panel);color:var(--mut);cursor:pointer}
+.scroll{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;color:var(--mut);border-bottom:2px solid var(--line)}
+blockquote{margin:20px 0;padding:10px 16px;background:var(--warn);border-left:4px solid var(--warnl);border-radius:0 8px 8px 0}
+blockquote p{margin:6px 0}
+hr{border:0;border-top:1px solid var(--line);margin:0}
+#pager{display:flex;justify-content:space-between;gap:12px;margin:48px 0 24px}
+#pager a{flex:1;padding:12px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--fg)}
+#pager a:hover{border-color:var(--acc)}
+#pager small{display:block;color:var(--mut)}
+#pager a:last-child:not(:first-child){text-align:right}
+footer{color:var(--mut);font-size:14px;padding-top:16px;border-top:1px solid var(--line)}
+@media (max-width:860px){
+  #menu{display:block}
+  #side{transform:translateX(-100%);background:var(--bg);transition:transform .2s}
+  body.nav-open #side{transform:none}
+  main{margin-left:0;padding:80px 16px 32px}
+  .brand{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){#side{transition:none}}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:28px}
+.card{display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--fg);text-decoration:none}
+.card:hover{border-color:var(--acc)}
+.card b{font:600 17px "IBM Plex Mono",monospace}
+.card small{color:var(--mut)}
+.card span{display:flex;flex-wrap:wrap;gap:4px}
+</style>
+</head>
+<body>
+<header>
+  <button id="menu" aria-label="Abrir menu" aria-controls="side">☰</button>
+  <a class="brand" href="#inicio">$ linux-terminal</a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Buscar comando (atalho: /)" aria-label="Buscar comando" autocomplete="off">
+    <ul id="res" hidden></ul>
+  </div>
+  <button id="theme" aria-label="Alternar tema claro e escuro">◐</button>
+</header>
+<nav id="side" aria-label="Capítulos"></nav>
+<main>
+  <article id="content"><p>Carregando…</p></article>
+  <div id="pager"></div>
+  <footer>Feito para estudar. Teste os comandos em uma máquina virtual ou em uma pasta de testes. <a href="https://github.com/DCapulot/Terminal-Linux">Código no GitHub</a>.</footer>
+</main>
+<script>/**
+ * marked v12.0.2 - a markdown parser
+ * Copyright (c) 2011-2024, Christopher Jeffrey. (MIT Licensed)
+ * https://github.com/markedjs/marked
+ */
+
+/**
+ * DO NOT EDIT THIS FILE
+ * The code in this file is generated from files in ./src/
+ */
+
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.marked = {}));
+})(this, (function (exports) { 'use strict';
+
+    /**
+     * Gets the original marked default options.
+     */
+    function _getDefaults() {
+        return {
+            async: false,
+            breaks: false,
+            extensions: null,
+            gfm: true,
+            hooks: null,
+            pedantic: false,
+            renderer: null,
+            silent: false,
+            tokenizer: null,
+            walkTokens: null
+        };
+    }
+    exports.defaults = _getDefaults();
+    function changeDefaults(newDefaults) {
+        exports.defaults = newDefaults;
+    }
+
+    /**
+     * Helpers
+     */
+    const escapeTest = /[&<>"']/;
+    const escapeReplace = new RegExp(escapeTest.source, 'g');
+    const escapeTestNoEncode = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/;
+    const escapeReplaceNoEncode = new RegExp(escapeTestNoEncode.source, 'g');
+    const escapeReplacements = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    };
+    const getEscapeReplacement = (ch) => escapeReplacements[ch];
+    function escape$1(html, encode) {
+        if (encode) {
+            if (escapeTest.test(html)) {
+                return html.replace(escapeReplace, getEscapeReplacement);
+            }
+        }
+        else {
+            if (escapeTestNoEncode.test(html)) {
+                return html.replace(escapeReplaceNoEncode, getEscapeReplacement);
+            }
+        }
+        return html;
+    }
+    const unescapeTest = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;
+    function unescape(html) {
+        // explicitly match decimal, hex, and named HTML entities
+        return html.replace(unescapeTest, (_, n) => {
+            n = n.toLowerCase();
+            if (n === 'colon')
+                return ':';
+            if (n.charAt(0) === '#') {
+                return n.charAt(1) === 'x'
+                    ? String.fromCharCode(parseInt(n.substring(2), 16))
+                    : String.fromCharCode(+n.substring(1));
+            }
+            return '';
+        });
+    }
+    const caret = /(^|[^\[])\^/g;
+    function edit(regex, opt) {
+        let source = typeof regex === 'string' ? regex : regex.source;
+        opt = opt || '';
+        const obj = {
+            replace: (name, val) => {
+                let valSource = typeof val === 'string' ? val : val.source;
+                valSource = valSource.replace(caret, '$1');
+                source = source.replace(name, valSource);
+                return obj;
+            },
+            getRegex: () => {
+                return new RegExp(source, opt);
+            }
+        };
+        return obj;
+    }
+    function cleanUrl(href) {
+        try {
+            href = encodeURI(href).replace(/%25/g, '%');
+        }
+        catch (e) {
+            return null;
+        }
+        return href;
+    }
+    const noopTest = { exec: () => null };
+    function splitCells(tableRow, count) {
+        // ensure that every cell-delimiting pipe has a space
+        // before it to distinguish it from an escaped pipe
+        const row = tableRow.replace(/\|/g, (match, offset, str) => {
+            let escaped = false;
+            let curr = offset;
+            while (--curr >= 0 && str[curr] === '\\')
+                escaped = !escaped;
+            if (escaped) {
+                // odd number of slashes means | is escaped
+                // so we leave it alone
+                return '|';
+            }
+            else {
+                // add space before unescaped |
+                return ' |';
+            }
+        }), cells = row.split(/ \|/);
+        let i = 0;
+        // First/last cell in a row cannot be empty if it has no leading/trailing pipe
+        if (!cells[0].trim()) {
+            cells.shift();
+        }
+        if (cells.length > 0 && !cells[cells.length - 1].trim()) {
+            cells.pop();
+        }
+        if (count) {
+            if (cells.length > count) {
+                cells.splice(count);
+            }
+            else {
+                while (cells.length < count)
+                    cells.push('');
+            }
+        }
+        for (; i < cells.length; i++) {
+            // leading or trailing whitespace is ignored per the gfm spec
+            cells[i] = cells[i].trim().replace(/\\\|/g, '|');
+        }
+        return cells;
+    }
+    /**
+     * Remove trailing 'c's. Equivalent to str.replace(/c*$/, '').
+     * /c*$/ is vulnerable to REDOS.
+     *
+     * @param str
+     * @param c
+     * @param invert Remove suffix of non-c chars instead. Default falsey.
+     */
+    function rtrim(str, c, invert) {
+        const l = str.length;
+        if (l === 0) {
+            return '';
+        }
+        // Length of suffix matching the invert condition.
+        let suffLen = 0;
+        // Step left until we fail to match the invert condition.
+        while (suffLen < l) {
+            const currChar = str.charAt(l - suffLen - 1);
+            if (currChar === c && !invert) {
+                suffLen++;
+            }
+            else if (currChar !== c && invert) {
+                suffLen++;
+            }
+            else {
+                break;
+            }
+        }
+        return str.slice(0, l - suffLen);
+    }
+    function findClosingBracket(str, b) {
+        if (str.indexOf(b[1]) === -1) {
+            return -1;
+        }
+        let level = 0;
+        for (let i = 0; i < str.length; i++) {
+            if (str[i] === '\\') {
+                i++;
+            }
+            else if (str[i] === b[0]) {
+                level++;
+            }
+            else if (str[i] === b[1]) {
+                level--;
+                if (level < 0) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    function outputLink(cap, link, raw, lexer) {
+        const href = link.href;
+        const title = link.title ? escape$1(link.title) : null;
+        const text = cap[1].replace(/\\([\[\]])/g, '$1');
+        if (cap[0].charAt(0) !== '!') {
+            lexer.state.inLink = true;
+            const token = {
+                type: 'link',
+                raw,
+                href,
+                title,
+                text,
+                tokens: lexer.inlineTokens(text)
+            };
+            lexer.state.inLink = false;
+            return token;
+        }
+        return {
+            type: 'image',
+            raw,
+            href,
+            title,
+            text: escape$1(text)
+        };
+    }
+    function indentCodeCompensation(raw, text) {
+        const matchIndentToCode = raw.match(/^(\s+)(?:```)/);
+        if (matchIndentToCode === null) {
+            return text;
+        }
+        const indentToCode = matchIndentToCode[1];
+        return text
+            .split('\n')
+            .map(node => {
+            const matchIndentInNode = node.match(/^\s+/);
+            if (matchIndentInNode === null) {
+                return node;
+            }
+            const [indentInNode] = matchIndentInNode;
+            if (indentInNode.length >= indentToCode.length) {
+                return node.slice(indentToCode.length);
+            }
+            return node;
+        })
+            .join('\n');
+    }
+    /**
+     * Tokenizer
+     */
+    class _Tokenizer {
+        options;
+        rules; // set by the lexer
+        lexer; // set by the lexer
+        constructor(options) {
+            this.options = options || exports.defaults;
+        }
+        space(src) {
+            const cap = this.rules.block.newline.exec(src);
+            if (cap && cap[0].length > 0) {
+                return {
+                    type: 'space',
+                    raw: cap[0]
+                };
+            }
+        }
+        code(src) {
+            const cap = this.rules.block.code.exec(src);
+            if (cap) {
+                const text = cap[0].replace(/^ {1,4}/gm, '');
+                return {
+                    type: 'code',
+                    raw: cap[0],
+                    codeBlockStyle: 'indented',
+                    text: !this.options.pedantic
+                        ? rtrim(text, '\n')
+                        : text
+                };
+            }
+        }
+        fences(src) {
+            const cap = this.rules.block.fences.exec(src);
+            if (cap) {
+                const raw = cap[0];
+                const text = indentCodeCompensation(raw, cap[3] || '');
+                return {
+                    type: 'code',
+                    raw,
+                    lang: cap[2] ? cap[2].trim().replace(this.rules.inline.anyPunctuation, '$1') : cap[2],
+                    text
+                };
+            }
+        }
+        heading(src) {
+            const cap = this.rules.block.heading.exec(src);
+            if (cap) {
+                let text = cap[2].trim();
+                // remove trailing #s
+                if (/#$/.test(text)) {
+                    const trimmed = rtrim(text, '#');
+                    if (this.options.pedantic) {
+                        text = trimmed.trim();
+                    }
+                    else if (!trimmed || / $/.test(trimmed)) {
+                        // CommonMark requires space before trailing #s
+                        text = trimmed.trim();
+                    }
+                }
+                return {
+                    type: 'heading',
+                    raw: cap[0],
+                    depth: cap[1].length,
+                    text,
+                    tokens: this.lexer.inline(text)
+                };
+            }
+        }
+        hr(src) {
+            const cap = this.rules.block.hr.exec(src);
+            if (cap) {
+                return {
+                    type: 'hr',
+                    raw: cap[0]
+                };
+            }
+        }
+        blockquote(src) {
+            const cap = this.rules.block.blockquote.exec(src);
+            if (cap) {
+                // precede setext continuation with 4 spaces so it isn't a setext
+                let text = cap[0].replace(/\n {0,3}((?:=+|-+) *)(?=\n|$)/g, '\n    $1');
+                text = rtrim(text.replace(/^ *>[ \t]?/gm, ''), '\n');
+                const top = this.lexer.state.top;
+                this.lexer.state.top = true;
+                const tokens = this.lexer.blockTokens(text);
+                this.lexer.state.top = top;
+                return {
+                    type: 'blockquote',
+                    raw: cap[0],
+                    tokens,
+                    text
+                };
+            }
+        }
+        list(src) {
+            let cap = this.rules.block.list.exec(src);
+            if (cap) {
+                let bull = cap[1].trim();
+                const isordered = bull.length > 1;
+                const list = {
+                    type: 'list',
+                    raw: '',
+                    ordered: isordered,
+                    start: isordered ? +bull.slice(0, -1) : '',
+                    loose: false,
+                    items: []
+                };
+                bull = isordered ? `\\d{1,9}\\${bull.slice(-1)}` : `\\${bull}`;
+                if (this.options.pedantic) {
+                    bull = isordered ? bull : '[*+-]';
+                }
+                // Get next list item
+                const itemRegex = new RegExp(`^( {0,3}${bull})((?:[\t ][^\\n]*)?(?:\\n|$))`);
+                let raw = '';
+                let itemContents = '';
+                let endsWithBlankLine = false;
+                // Check if current bullet point can start a new List Item
+                while (src) {
+                    let endEarly = false;
+                    if (!(cap = itemRegex.exec(src))) {
+                        break;
+                    }
+                    if (this.rules.block.hr.test(src)) { // End list if bullet was actually HR (possibly move into itemRegex?)
+                        break;
+                    }
+                    raw = cap[0];
+                    src = src.substring(raw.length);
+                    let line = cap[2].split('\n', 1)[0].replace(/^\t+/, (t) => ' '.repeat(3 * t.length));
+                    let nextLine = src.split('\n', 1)[0];
+                    let indent = 0;
+                    if (this.options.pedantic) {
+                        indent = 2;
+                        itemContents = line.trimStart();
+                    }
+                    else {
+                        indent = cap[2].search(/[^ ]/); // Find first non-space char
+                        indent = indent > 4 ? 1 : indent; // Treat indented code blocks (> 4 spaces) as having only 1 indent
+                        itemContents = line.slice(indent);
+                        indent += cap[1].length;
+                    }
+                    let blankLine = false;
+                    if (!line && /^ *$/.test(nextLine)) { // Items begin with at most one blank line
+                        raw += nextLine + '\n';
+                        src = src.substring(nextLine.length + 1);
+                        endEarly = true;
+                    }
+                    if (!endEarly) {
+                        const nextBulletRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ \t][^\\n]*)?(?:\\n|$))`);
+                        const hrRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`);
+                        const fencesBeginRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:\`\`\`|~~~)`);
+                        const headingBeginRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}#`);
+                        // Check if following lines should be included in List Item
+                        while (src) {
+                            const rawLine = src.split('\n', 1)[0];
+                            nextLine = rawLine;
+                            // Re-align to follow commonmark nesting rules
+                            if (this.options.pedantic) {
+                                nextLine = nextLine.replace(/^ {1,4}(?=( {4})*[^ ])/g, '  ');
+                            }
+                            // End list item if found code fences
+                            if (fencesBeginRegex.test(nextLine)) {
+                                break;
+                            }
+                            // End list item if found start of new heading
+                            if (headingBeginRegex.test(nextLine)) {
+                                break;
+                            }
+                            // End list item if found start of new bullet
+                            if (nextBulletRegex.test(nextLine)) {
+                                break;
+                            }
+                            // Horizontal rule found
+                            if (hrRegex.test(src)) {
+                                break;
+                            }
+                            if (nextLine.search(/[^ ]/) >= indent || !nextLine.trim()) { // Dedent if possible
+                                itemContents += '\n' + nextLine.slice(indent);
+                            }
+                            else {
+                                // not enough indentation
+                                if (blankLine) {
+                                    break;
+                                }
+                                // paragraph continuation unless last line was a different block level element
+                                if (line.search(/[^ ]/) >= 4) { // indented code block
+                                    break;
+                                }
+                                if (fencesBeginRegex.test(line)) {
+                                    break;
+                                }
+                                if (headingBeginRegex.test(line)) {
+                                    break;
+                                }
+                                if (hrRegex.test(line)) {
+                                    break;
+                                }
+                                itemContents += '\n' + nextLine;
+                            }
+                            if (!blankLine && !nextLine.trim()) { // Check if current line is blank
+                                blankLine = true;
+                            }
+                            raw += rawLine + '\n';
+                            src = src.substring(rawLine.length + 1);
+                            line = nextLine.slice(indent);
+                        }
+                    }
+                    if (!list.loose) {
+                        // If the previous item ended with a blank line, the list is loose
+                        if (endsWithBlankLine) {
+                            list.loose = true;
+                        }
+                        else if (/\n *\n *$/.test(raw)) {
+                            endsWithBlankLine = true;
+                        }
+                    }
+                    let istask = null;
+                    let ischecked;
+                    // Check for task list items
+                    if (this.options.gfm) {
+                        istask = /^\[[ xX]\] /.exec(itemContents);
+                        if (istask) {
+                            ischecked = istask[0] !== '[ ] ';
+                            itemContents = itemContents.replace(/^\[[ xX]\] +/, '');
+                        }
+                    }
+                    list.items.push({
+                        type: 'list_item',
+                        raw,
+                        task: !!istask,
+                        checked: ischecked,
+                        loose: false,
+                        text: itemContents,
+                        tokens: []
+                    });
+                    list.raw += raw;
+                }
+                // Do not consume newlines at end of final item. Alternatively, make itemRegex *start* with any newlines to simplify/speed up endsWithBlankLine logic
+                list.items[list.items.length - 1].raw = raw.trimEnd();
+                (list.items[list.items.length - 1]).text = itemContents.trimEnd();
+                list.raw = list.raw.trimEnd();
+                // Item child tokens handled here at end because we needed to have the final item to trim it first
+                for (let i = 0; i < list.items.length; i++) {
+                    this.lexer.state.top = false;
+                    list.items[i].tokens = this.lexer.blockTokens(list.items[i].text, []);
+                    if (!list.loose) {
+                        // Check if list should be loose
+                        const spacers = list.items[i].tokens.filter(t => t.type === 'space');
+                        const hasMultipleLineBreaks = spacers.length > 0 && spacers.some(t => /\n.*\n/.test(t.raw));
+                        list.loose = hasMultipleLineBreaks;
+                    }
+                }
+                // Set all items to loose if list is loose
+                if (list.loose) {
+                    for (let i = 0; i < list.items.length; i++) {
+                        list.items[i].loose = true;
+                    }
+                }
+                return list;
+            }
+        }
+        html(src) {
+            const cap = this.rules.block.html.exec(src);
+            if (cap) {
+                const token = {
+                    type: 'html',
+                    block: true,
+                    raw: cap[0],
+                    pre: cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style',
+                    text: cap[0]
+                };
+                return token;
+            }
+        }
+        def(src) {
+            const cap = this.rules.block.def.exec(src);
+            if (cap) {
+                const tag = cap[1].toLowerCase().replace(/\s+/g, ' ');
+                const href = cap[2] ? cap[2].replace(/^<(.*)>$/, '$1').replace(this.rules.inline.anyPunctuation, '$1') : '';
+                const title = cap[3] ? cap[3].substring(1, cap[3].length - 1).replace(this.rules.inline.anyPunctuation, '$1') : cap[3];
+                return {
+                    type: 'def',
+                    tag,
+                    raw: cap[0],
+                    href,
+                    title
+                };
+            }
+        }
+        table(src) {
+            const cap = this.rules.block.table.exec(src);
+            if (!cap) {
+                return;
+            }
+            if (!/[:|]/.test(cap[2])) {
+                // delimiter row must have a pipe (|) or colon (:) otherwise it is a setext heading
+                return;
+            }
+            const headers = splitCells(cap[1]);
+            const aligns = cap[2].replace(/^\||\| *$/g, '').split('|');
+            const rows = cap[3] && cap[3].trim() ? cap[3].replace(/\n[ \t]*$/, '').split('\n') : [];
+            const item = {
+                type: 'table',
+                raw: cap[0],
+                header: [],
+                align: [],
+                rows: []
+            };
+            if (headers.length !== aligns.length) {
+                // header and align columns must be equal, rows can be different.
+                return;
+            }
+            for (const align of aligns) {
+                if (/^ *-+: *$/.test(align)) {
+                    item.align.push('right');
+                }
+                else if (/^ *:-+: *$/.test(align)) {
+                    item.align.push('center');
+                }
+                else if (/^ *:-+ *$/.test(align)) {
+                    item.align.push('left');
+                }
+                else {
+                    item.align.push(null);
+                }
+            }
+            for (const header of headers) {
+                item.header.push({
+                    text: header,
+                    tokens: this.lexer.inline(header)
+                });
+            }
+            for (const row of rows) {
+                item.rows.push(splitCells(row, item.header.length).map(cell => {
+                    return {
+                        text: cell,
+                        tokens: this.lexer.inline(cell)
+                    };
+                }));
+            }
+            return item;
+        }
+        lheading(src) {
+            const cap = this.rules.block.lheading.exec(src);
+            if (cap) {
+                return {
+                    type: 'heading',
+                    raw: cap[0],
+                    depth: cap[2].charAt(0) === '=' ? 1 : 2,
+                    text: cap[1],
+                    tokens: this.lexer.inline(cap[1])
+                };
+            }
+        }
+        paragraph(src) {
+            const cap = this.rules.block.paragraph.exec(src);
+            if (cap) {
+                const text = cap[1].charAt(cap[1].length - 1) === '\n'
+                    ? cap[1].slice(0, -1)
+                    : cap[1];
+                return {
+                    type: 'paragraph',
+                    raw: cap[0],
+                    text,
+                    tokens: this.lexer.inline(text)
+                };
+            }
+        }
+        text(src) {
+            const cap = this.rules.block.text.exec(src);
+            if (cap) {
+                return {
+                    type: 'text',
+                    raw: cap[0],
+                    text: cap[0],
+                    tokens: this.lexer.inline(cap[0])
+                };
+            }
+        }
+        escape(src) {
+            const cap = this.rules.inline.escape.exec(src);
+            if (cap) {
+                return {
+                    type: 'escape',
+                    raw: cap[0],
+                    text: escape$1(cap[1])
+                };
+            }
+        }
+        tag(src) {
+            const cap = this.rules.inline.tag.exec(src);
+            if (cap) {
+                if (!this.lexer.state.inLink && /^<a /i.test(cap[0])) {
+                    this.lexer.state.inLink = true;
+                }
+                else if (this.lexer.state.inLink && /^<\/a>/i.test(cap[0])) {
+                    this.lexer.state.inLink = false;
+                }
+                if (!this.lexer.state.inRawBlock && /^<(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
+                    this.lexer.state.inRawBlock = true;
+                }
+                else if (this.lexer.state.inRawBlock && /^<\/(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
+                    this.lexer.state.inRawBlock = false;
+                }
+                return {
+                    type: 'html',
+                    raw: cap[0],
+                    inLink: this.lexer.state.inLink,
+                    inRawBlock: this.lexer.state.inRawBlock,
+                    block: false,
+                    text: cap[0]
+                };
+            }
+        }
+        link(src) {
+            const cap = this.rules.inline.link.exec(src);
+            if (cap) {
+                const trimmedUrl = cap[2].trim();
+                if (!this.options.pedantic && /^</.test(trimmedUrl)) {
+                    // commonmark requires matching angle brackets
+                    if (!(/>$/.test(trimmedUrl))) {
+                        return;
+                    }
+                    // ending angle bracket cannot be escaped
+                    const rtrimSlash = rtrim(trimmedUrl.slice(0, -1), '\\');
+                    if ((trimmedUrl.length - rtrimSlash.length) % 2 === 0) {
+                        return;
+                    }
+                }
+                else {
+                    // find closing parenthesis
+                    const lastParenIndex = findClosingBracket(cap[2], '()');
+                    if (lastParenIndex > -1) {
+                        const start = cap[0].indexOf('!') === 0 ? 5 : 4;
+                        const linkLen = start + cap[1].length + lastParenIndex;
+                        cap[2] = cap[2].substring(0, lastParenIndex);
+                        cap[0] = cap[0].substring(0, linkLen).trim();
+                        cap[3] = '';
+                    }
+                }
+                let href = cap[2];
+                let title = '';
+                if (this.options.pedantic) {
+                    // split pedantic href and title
+                    const link = /^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(href);
+                    if (link) {
+                        href = link[1];
+                        title = link[3];
+                    }
+                }
+                else {
+                    title = cap[3] ? cap[3].slice(1, -1) : '';
+                }
+                href = href.trim();
+                if (/^</.test(href)) {
+                    if (this.options.pedantic && !(/>$/.test(trimmedUrl))) {
+                        // pedantic allows starting angle bracket without ending angle bracket
+                        href = href.slice(1);
+                    }
+                    else {
+                        href = href.slice(1, -1);
+                    }
+                }
+                return outputLink(cap, {
+                    href: href ? href.replace(this.rules.inline.anyPunctuation, '$1') : href,
+                    title: title ? title.replace(this.rules.inline.anyPunctuation, '$1') : title
+                }, cap[0], this.lexer);
+            }
+        }
+        reflink(src, links) {
+            let cap;
+            if ((cap = this.rules.inline.reflink.exec(src))
+                || (cap = this.rules.inline.nolink.exec(src))) {
+                const linkString = (cap[2] || cap[1]).replace(/\s+/g, ' ');
+                const link = links[linkString.toLowerCase()];
+                if (!link) {
+                    const text = cap[0].charAt(0);
+                    return {
+                        type: 'text',
+                        raw: text,
+                        text
+                    };
+                }
+                return outputLink(cap, link, cap[0], this.lexer);
+            }
+        }
+        emStrong(src, maskedSrc, prevChar = '') {
+            let match = this.rules.inline.emStrongLDelim.exec(src);
+            if (!match)
+                return;
+            // _ can't be between two alphanumerics. \p{L}\p{N} includes non-english alphabet/numbers as well
+            if (match[3] && prevChar.match(/[\p{L}\p{N}]/u))
+                return;
+            const nextChar = match[1] || match[2] || '';
+            if (!nextChar || !prevChar || this.rules.inline.punctuation.exec(prevChar)) {
+                // unicode Regex counts emoji as 1 char; spread into array for proper count (used multiple times below)
+                const lLength = [...match[0]].length - 1;
+                let rDelim, rLength, delimTotal = lLength, midDelimTotal = 0;
+                const endReg = match[0][0] === '*' ? this.rules.inline.emStrongRDelimAst : this.rules.inline.emStrongRDelimUnd;
+                endReg.lastIndex = 0;
+                // Clip maskedSrc to same section of string as src (move to lexer?)
+                maskedSrc = maskedSrc.slice(-1 * src.length + lLength);
+                while ((match = endReg.exec(maskedSrc)) != null) {
+                    rDelim = match[1] || match[2] || match[3] || match[4] || match[5] || match[6];
+                    if (!rDelim)
+                        continue; // skip single * in __abc*abc__
+                    rLength = [...rDelim].length;
+                    if (match[3] || match[4]) { // found another Left Delim
+                        delimTotal += rLength;
+                        continue;
+                    }
+                    else if (match[5] || match[6]) { // either Left or Right Delim
+                        if (lLength % 3 && !((lLength + rLength) % 3)) {
+                            midDelimTotal += rLength;
+                            continue; // CommonMark Emphasis Rules 9-10
+                        }
+                    }
+                    delimTotal -= rLength;
+                    if (delimTotal > 0)
+                        continue; // Haven't found enough closing delimiters
+                    // Remove extra characters. *a*** -> *a*
+                    rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
+                    // char length can be >1 for unicode characters;
+                    const lastCharLength = [...match[0]][0].length;
+                    const raw = src.slice(0, lLength + match.index + lastCharLength + rLength);
+                    // Create `em` if smallest delimiter has odd char count. *a***
+                    if (Math.min(lLength, rLength) % 2) {
+                        const text = raw.slice(1, -1);
+                        return {
+                            type: 'em',
+                            raw,
+                            text,
+                            tokens: this.lexer.inlineTokens(text)
+                        };
+                    }
+                    // Create 'strong' if smallest delimiter has even char count. **a***
+                    const text = raw.slice(2, -2);
+                    return {
+                        type: 'strong',
+                        raw,
+                        text,
+                        tokens: this.lexer.inlineTokens(text)
+                    };
+                }
+            }
+        }
+        codespan(src) {
+            const cap = this.rules.inline.code.exec(src);
+            if (cap) {
+                let text = cap[2].replace(/\n/g, ' ');
+                const hasNonSpaceChars = /[^ ]/.test(text);
+                const hasSpaceCharsOnBothEnds = /^ /.test(text) && / $/.test(text);
+                if (hasNonSpaceChars && hasSpaceCharsOnBothEnds) {
+                    text = text.substring(1, text.length - 1);
+                }
+                text = escape$1(text, true);
+                return {
+                    type: 'codespan',
+                    raw: cap[0],
+                    text
+                };
+            }
+        }
+        br(src) {
+            const cap = this.rules.inline.br.exec(src);
+            if (cap) {
+                return {
+                    type: 'br',
+                    raw: cap[0]
+                };
+            }
+        }
+        del(src) {
+            const cap = this.rules.inline.del.exec(src);
+            if (cap) {
+                return {
+                    type: 'del',
+                    raw: cap[0],
+                    text: cap[2],
+                    tokens: this.lexer.inlineTokens(cap[2])
+                };
+            }
+        }
+        autolink(src) {
+            const cap = this.rules.inline.autolink.exec(src);
+            if (cap) {
+                let text, href;
+                if (cap[2] === '@') {
+                    text = escape$1(cap[1]);
+                    href = 'mailto:' + text;
+                }
+                else {
+                    text = escape$1(cap[1]);
+                    href = text;
+                }
+                return {
+                    type: 'link',
+                    raw: cap[0],
+                    text,
+                    href,
+                    tokens: [
+                        {
+                            type: 'text',
+                            raw: text,
+                            text
+                        }
+                    ]
+                };
+            }
+        }
+        url(src) {
+            let cap;
+            if (cap = this.rules.inline.url.exec(src)) {
+                let text, href;
+                if (cap[2] === '@') {
+                    text = escape$1(cap[0]);
+                    href = 'mailto:' + text;
+                }
+                else {
+                    // do extended autolink path validation
+                    let prevCapZero;
+                    do {
+                        prevCapZero = cap[0];
+                        cap[0] = this.rules.inline._backpedal.exec(cap[0])?.[0] ?? '';
+                    } while (prevCapZero !== cap[0]);
+                    text = escape$1(cap[0]);
+                    if (cap[1] === 'www.') {
+                        href = 'http://' + cap[0];
+                    }
+                    else {
+                        href = cap[0];
+                    }
+                }
+                return {
+                    type: 'link',
+                    raw: cap[0],
+                    text,
+                    href,
+                    tokens: [
+                        {
+                            type: 'text',
+                            raw: text,
+                            text
+                        }
+                    ]
+                };
+            }
+        }
+        inlineText(src) {
+            const cap = this.rules.inline.text.exec(src);
+            if (cap) {
+                let text;
+                if (this.lexer.state.inRawBlock) {
+                    text = cap[0];
+                }
+                else {
+                    text = escape$1(cap[0]);
+                }
+                return {
+                    type: 'text',
+                    raw: cap[0],
+                    text
+                };
+            }
+        }
+    }
+
+    /**
+     * Block-Level Grammar
+     */
+    const newline = /^(?: *(?:\n|$))+/;
+    const blockCode = /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/;
+    const fences = /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/;
+    const hr = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/;
+    const heading = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/;
+    const bullet = /(?:[*+-]|\d{1,9}[.)])/;
+    const lheading = edit(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/)
+        .replace(/bull/g, bullet) // lists can interrupt
+        .replace(/blockCode/g, / {4}/) // indented code blocks can interrupt
+        .replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/) // fenced code blocks can interrupt
+        .replace(/blockquote/g, / {0,3}>/) // blockquote can interrupt
+        .replace(/heading/g, / {0,3}#{1,6}/) // ATX heading can interrupt
+        .replace(/html/g, / {0,3}<[^\n>]+>\n/) // block html can interrupt
+        .getRegex();
+    const _paragraph = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/;
+    const blockText = /^[^\n]+/;
+    const _blockLabel = /(?!\s*\])(?:\\.|[^\[\]\\])+/;
+    const def = edit(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/)
+        .replace('label', _blockLabel)
+        .replace('title', /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/)
+        .getRegex();
+    const list = edit(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/)
+        .replace(/bull/g, bullet)
+        .getRegex();
+    const _tag = 'address|article|aside|base|basefont|blockquote|body|caption'
+        + '|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption'
+        + '|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe'
+        + '|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option'
+        + '|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title'
+        + '|tr|track|ul';
+    const _comment = /<!--(?:-?>|[\s\S]*?(?:-->|$))/;
+    const html = edit('^ {0,3}(?:' // optional indentation
+        + '<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
+        + '|comment[^\\n]*(\\n+|$)' // (2)
+        + '|<\\?[\\s\\S]*?(?:\\?>\\n*|$)' // (3)
+        + '|<![A-Z][\\s\\S]*?(?:>\\n*|$)' // (4)
+        + '|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)' // (5)
+        + '|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (6)
+        + '|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (7) open tag
+        + '|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (7) closing tag
+        + ')', 'i')
+        .replace('comment', _comment)
+        .replace('tag', _tag)
+        .replace('attribute', / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/)
+        .getRegex();
+    const paragraph = edit(_paragraph)
+        .replace('hr', hr)
+        .replace('heading', ' {0,3}#{1,6}(?:\\s|$)')
+        .replace('|lheading', '') // setext headings don't interrupt commonmark paragraphs
+        .replace('|table', '')
+        .replace('blockquote', ' {0,3}>')
+        .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
+        .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+        .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
+        .replace('tag', _tag) // pars can be interrupted by type (6) html blocks
+        .getRegex();
+    const blockquote = edit(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/)
+        .replace('paragraph', paragraph)
+        .getRegex();
+    /**
+     * Normal Block Grammar
+     */
+    const blockNormal = {
+        blockquote,
+        code: blockCode,
+        def,
+        fences,
+        heading,
+        hr,
+        html,
+        lheading,
+        list,
+        newline,
+        paragraph,
+        table: noopTest,
+        text: blockText
+    };
+    /**
+     * GFM Block Grammar
+     */
+    const gfmTable = edit('^ *([^\\n ].*)\\n' // Header
+        + ' {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)' // Align
+        + '(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)') // Cells
+        .replace('hr', hr)
+        .replace('heading', ' {0,3}#{1,6}(?:\\s|$)')
+        .replace('blockquote', ' {0,3}>')
+        .replace('code', ' {4}[^\\n]')
+        .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
+        .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+        .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
+        .replace('tag', _tag) // tables can be interrupted by type (6) html blocks
+        .getRegex();
+    const blockGfm = {
+        ...blockNormal,
+        table: gfmTable,
+        paragraph: edit(_paragraph)
+            .replace('hr', hr)
+            .replace('heading', ' {0,3}#{1,6}(?:\\s|$)')
+            .replace('|lheading', '') // setext headings don't interrupt commonmark paragraphs
+            .replace('table', gfmTable) // interrupt paragraphs with table
+            .replace('blockquote', ' {0,3}>')
+            .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
+            .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+            .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
+            .replace('tag', _tag) // pars can be interrupted by type (6) html blocks
+            .getRegex()
+    };
+    /**
+     * Pedantic grammar (original John Gruber's loose markdown specification)
+     */
+    const blockPedantic = {
+        ...blockNormal,
+        html: edit('^ *(?:comment *(?:\\n|\\s*$)'
+            + '|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)' // closed tag
+            + '|<tag(?:"[^"]*"|\'[^\']*\'|\\s[^\'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))')
+            .replace('comment', _comment)
+            .replace(/tag/g, '(?!(?:'
+            + 'a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub'
+            + '|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)'
+            + '\\b)\\w+(?!:|[^\\w\\s@]*@)\\b')
+            .getRegex(),
+        def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
+        heading: /^(#{1,6})(.*)(?:\n+|$)/,
+        fences: noopTest, // fences not supported
+        lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
+        paragraph: edit(_paragraph)
+            .replace('hr', hr)
+            .replace('heading', ' *#{1,6} *[^\n]')
+            .replace('lheading', lheading)
+            .replace('|table', '')
+            .replace('blockquote', ' {0,3}>')
+            .replace('|fences', '')
+            .replace('|list', '')
+            .replace('|html', '')
+            .replace('|tag', '')
+            .getRegex()
+    };
+    /**
+     * Inline-Level Grammar
+     */
+    const escape = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/;
+    const inlineCode = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/;
+    const br = /^( {2,}|\\)\n(?!\s*$)/;
+    const inlineText = /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/;
+    // list of unicode punctuation marks, plus any missing characters from CommonMark spec
+    const _punctuation = '\\p{P}\\p{S}';
+    const punctuation = edit(/^((?![*_])[\spunctuation])/, 'u')
+        .replace(/punctuation/g, _punctuation).getRegex();
+    // sequences em should skip over [title](link), `code`, <html>
+    const blockSkip = /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g;
+    const emStrongLDelim = edit(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/, 'u')
+        .replace(/punct/g, _punctuation)
+        .getRegex();
+    const emStrongRDelimAst = edit('^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)' // Skip orphan inside strong
+        + '|[^*]+(?=[^*])' // Consume to delim
+        + '|(?!\\*)[punct](\\*+)(?=[\\s]|$)' // (1) #*** can only be a Right Delimiter
+        + '|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)' // (2) a***#, a*** can only be a Right Delimiter
+        + '|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])' // (3) #***a, ***a can only be Left Delimiter
+        + '|[\\s](\\*+)(?!\\*)(?=[punct])' // (4) ***# can only be Left Delimiter
+        + '|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])' // (5) #***# can be either Left or Right Delimiter
+        + '|[^punct\\s](\\*+)(?=[^punct\\s])', 'gu') // (6) a***a can be either Left or Right Delimiter
+        .replace(/punct/g, _punctuation)
+        .getRegex();
+    // (6) Not allowed for _
+    const emStrongRDelimUnd = edit('^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)' // Skip orphan inside strong
+        + '|[^_]+(?=[^_])' // Consume to delim
+        + '|(?!_)[punct](_+)(?=[\\s]|$)' // (1) #___ can only be a Right Delimiter
+        + '|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)' // (2) a___#, a___ can only be a Right Delimiter
+        + '|(?!_)[punct\\s](_+)(?=[^punct\\s])' // (3) #___a, ___a can only be Left Delimiter
+        + '|[\\s](_+)(?!_)(?=[punct])' // (4) ___# can only be Left Delimiter
+        + '|(?!_)[punct](_+)(?!_)(?=[punct])', 'gu') // (5) #___# can be either Left or Right Delimiter
+        .replace(/punct/g, _punctuation)
+        .getRegex();
+    const anyPunctuation = edit(/\\([punct])/, 'gu')
+        .replace(/punct/g, _punctuation)
+        .getRegex();
+    const autolink = edit(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/)
+        .replace('scheme', /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/)
+        .replace('email', /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/)
+        .getRegex();
+    const _inlineComment = edit(_comment).replace('(?:-->|$)', '-->').getRegex();
+    const tag = edit('^comment'
+        + '|^</[a-zA-Z][\\w:-]*\\s*>' // self-closing tag
+        + '|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>' // open tag
+        + '|^<\\?[\\s\\S]*?\\?>' // processing instruction, e.g. <?php ?>
+        + '|^<![a-zA-Z]+\\s[\\s\\S]*?>' // declaration, e.g. <!DOCTYPE html>
+        + '|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>') // CDATA section
+        .replace('comment', _inlineComment)
+        .replace('attribute', /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/)
+        .getRegex();
+    const _inlineLabel = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
+    const link = edit(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/)
+        .replace('label', _inlineLabel)
+        .replace('href', /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/)
+        .replace('title', /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/)
+        .getRegex();
+    const reflink = edit(/^!?\[(label)\]\[(ref)\]/)
+        .replace('label', _inlineLabel)
+        .replace('ref', _blockLabel)
+        .getRegex();
+    const nolink = edit(/^!?\[(ref)\](?:\[\])?/)
+        .replace('ref', _blockLabel)
+        .getRegex();
+    const reflinkSearch = edit('reflink|nolink(?!\\()', 'g')
+        .replace('reflink', reflink)
+        .replace('nolink', nolink)
+        .getRegex();
+    /**
+     * Normal Inline Grammar
+     */
+    const inlineNormal = {
+        _backpedal: noopTest, // only used for GFM url
+        anyPunctuation,
+        autolink,
+        blockSkip,
+        br,
+        code: inlineCode,
+        del: noopTest,
+        emStrongLDelim,
+        emStrongRDelimAst,
+        emStrongRDelimUnd,
+        escape,
+        link,
+        nolink,
+        punctuation,
+        reflink,
+        reflinkSearch,
+        tag,
+        text: inlineText,
+        url: noopTest
+    };
+    /**
+     * Pedantic Inline Grammar
+     */
+    const inlinePedantic = {
+        ...inlineNormal,
+        link: edit(/^!?\[(label)\]\((.*?)\)/)
+            .replace('label', _inlineLabel)
+            .getRegex(),
+        reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/)
+            .replace('label', _inlineLabel)
+            .getRegex()
+    };
+    /**
+     * GFM Inline Grammar
+     */
+    const inlineGfm = {
+        ...inlineNormal,
+        escape: edit(escape).replace('])', '~|])').getRegex(),
+        url: edit(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, 'i')
+            .replace('email', /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/)
+            .getRegex(),
+        _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,
+        del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,
+        text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/
+    };
+    /**
+     * GFM + Line Breaks Inline Grammar
+     */
+    const inlineBreaks = {
+        ...inlineGfm,
+        br: edit(br).replace('{2,}', '*').getRegex(),
+        text: edit(inlineGfm.text)
+            .replace('\\b_', '\\b_| {2,}\\n')
+            .replace(/\{2,\}/g, '*')
+            .getRegex()
+    };
+    /**
+     * exports
+     */
+    const block = {
+        normal: blockNormal,
+        gfm: blockGfm,
+        pedantic: blockPedantic
+    };
+    const inline = {
+        normal: inlineNormal,
+        gfm: inlineGfm,
+        breaks: inlineBreaks,
+        pedantic: inlinePedantic
+    };
+
+    /**
+     * Block Lexer
+     */
+    class _Lexer {
+        tokens;
+        options;
+        state;
+        tokenizer;
+        inlineQueue;
+        constructor(options) {
+            // TokenList cannot be created in one go
+            this.tokens = [];
+            this.tokens.links = Object.create(null);
+            this.options = options || exports.defaults;
+            this.options.tokenizer = this.options.tokenizer || new _Tokenizer();
+            this.tokenizer = this.options.tokenizer;
+            this.tokenizer.options = this.options;
+            this.tokenizer.lexer = this;
+            this.inlineQueue = [];
+            this.state = {
+                inLink: false,
+                inRawBlock: false,
+                top: true
+            };
+            const rules = {
+                block: block.normal,
+                inline: inline.normal
+            };
+            if (this.options.pedantic) {
+                rules.block = block.pedantic;
+                rules.inline = inline.pedantic;
+            }
+            else if (this.options.gfm) {
+                rules.block = block.gfm;
+                if (this.options.breaks) {
+                    rules.inline = inline.breaks;
+                }
+                else {
+                    rules.inline = inline.gfm;
+                }
+            }
+            this.tokenizer.rules = rules;
+        }
+        /**
+         * Expose Rules
+         */
+        static get rules() {
+            return {
+                block,
+                inline
+            };
+        }
+        /**
+         * Static Lex Method
+         */
+        static lex(src, options) {
+            const lexer = new _Lexer(options);
+            return lexer.lex(src);
+        }
+        /**
+         * Static Lex Inline Method
+         */
+        static lexInline(src, options) {
+            const lexer = new _Lexer(options);
+            return lexer.inlineTokens(src);
+        }
+        /**
+         * Preprocessing
+         */
+        lex(src) {
+            src = src
+                .replace(/\r\n|\r/g, '\n');
+            this.blockTokens(src, this.tokens);
+            for (let i = 0; i < this.inlineQueue.length; i++) {
+                const next = this.inlineQueue[i];
+                this.inlineTokens(next.src, next.tokens);
+            }
+            this.inlineQueue = [];
+            return this.tokens;
+        }
+        blockTokens(src, tokens = []) {
+            if (this.options.pedantic) {
+                src = src.replace(/\t/g, '    ').replace(/^ +$/gm, '');
+            }
+            else {
+                src = src.replace(/^( *)(\t+)/gm, (_, leading, tabs) => {
+                    return leading + '    '.repeat(tabs.length);
+                });
+            }
+            let token;
+            let lastToken;
+            let cutSrc;
+            let lastParagraphClipped;
+            while (src) {
+                if (this.options.extensions
+                    && this.options.extensions.block
+                    && this.options.extensions.block.some((extTokenizer) => {
+                        if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
+                            src = src.substring(token.raw.length);
+                            tokens.push(token);
+                            return true;
+                        }
+                        return false;
+                    })) {
+                    continue;
+                }
+                // newline
+                if (token = this.tokenizer.space(src)) {
+                    src = src.substring(token.raw.length);
+                    if (token.raw.length === 1 && tokens.length > 0) {
+                        // if there's a single \n as a spacer, it's terminating the last line,
+                        // so move it there so that we don't get unnecessary paragraph tags
+                        tokens[tokens.length - 1].raw += '\n';
+                    }
+                    else {
+                        tokens.push(token);
+                    }
+                    continue;
+                }
+                // code
+                if (token = this.tokenizer.code(src)) {
+                    src = src.substring(token.raw.length);
+                    lastToken = tokens[tokens.length - 1];
+                    // An indented code block cannot interrupt a paragraph.
+                    if (lastToken && (lastToken.type === 'paragraph' || lastToken.type === 'text')) {
+                        lastToken.raw += '\n' + token.raw;
+                        lastToken.text += '\n' + token.text;
+                        this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+                    }
+                    else {
+                        tokens.push(token);
+                    }
+                    continue;
+                }
+                // fences
+                if (token = this.tokenizer.fences(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // heading
+                if (token = this.tokenizer.heading(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // hr
+                if (token = this.tokenizer.hr(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // blockquote
+                if (token = this.tokenizer.blockquote(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // list
+                if (token = this.tokenizer.list(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // html
+                if (token = this.tokenizer.html(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // def
+                if (token = this.tokenizer.def(src)) {
+                    src = src.substring(token.raw.length);
+                    lastToken = tokens[tokens.length - 1];
+                    if (lastToken && (lastToken.type === 'paragraph' || lastToken.type === 'text')) {
+                        lastToken.raw += '\n' + token.raw;
+                        lastToken.text += '\n' + token.raw;
+                        this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+                    }
+                    else if (!this.tokens.links[token.tag]) {
+                        this.tokens.links[token.tag] = {
+                            href: token.href,
+                            title: token.title
+                        };
+                    }
+                    continue;
+                }
+                // table (gfm)
+                if (token = this.tokenizer.table(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // lheading
+                if (token = this.tokenizer.lheading(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // top-level paragraph
+                // prevent paragraph consuming extensions by clipping 'src' to extension start
+                cutSrc = src;
+                if (this.options.extensions && this.options.extensions.startBlock) {
+                    let startIndex = Infinity;
+                    const tempSrc = src.slice(1);
+                    let tempStart;
+                    this.options.extensions.startBlock.forEach((getStartIndex) => {
+                        tempStart = getStartIndex.call({ lexer: this }, tempSrc);
+                        if (typeof tempStart === 'number' && tempStart >= 0) {
+                            startIndex = Math.min(startIndex, tempStart);
+                        }
+                    });
+                    if (startIndex < Infinity && startIndex >= 0) {
+                        cutSrc = src.substring(0, startIndex + 1);
+                    }
+                }
+                if (this.state.top && (token = this.tokenizer.paragraph(cutSrc))) {
+                    lastToken = tokens[tokens.length - 1];
+                    if (lastParagraphClipped && lastToken.type === 'paragraph') {
+                        lastToken.raw += '\n' + token.raw;
+                        lastToken.text += '\n' + token.text;
+                        this.inlineQueue.pop();
+                        this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+                    }
+                    else {
+                        tokens.push(token);
+                    }
+                    lastParagraphClipped = (cutSrc.length !== src.length);
+                    src = src.substring(token.raw.length);
+                    continue;
+                }
+                // text
+                if (token = this.tokenizer.text(src)) {
+                    src = src.substring(token.raw.length);
+                    lastToken = tokens[tokens.length - 1];
+                    if (lastToken && lastToken.type === 'text') {
+                        lastToken.raw += '\n' + token.raw;
+                        lastToken.text += '\n' + token.text;
+                        this.inlineQueue.pop();
+                        this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+                    }
+                    else {
+                        tokens.push(token);
+                    }
+                    continue;
+                }
+                if (src) {
+                    const errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
+                    if (this.options.silent) {
+                        console.error(errMsg);
+                        break;
+                    }
+                    else {
+                        throw new Error(errMsg);
+                    }
+                }
+            }
+            this.state.top = true;
+            return tokens;
+        }
+        inline(src, tokens = []) {
+            this.inlineQueue.push({ src, tokens });
+            return tokens;
+        }
+        /**
+         * Lexing/Compiling
+         */
+        inlineTokens(src, tokens = []) {
+            let token, lastToken, cutSrc;
+            // String with links masked to avoid interference with em and strong
+            let maskedSrc = src;
+            let match;
+            let keepPrevChar, prevChar;
+            // Mask out reflinks
+            if (this.tokens.links) {
+                const links = Object.keys(this.tokens.links);
+                if (links.length > 0) {
+                    while ((match = this.tokenizer.rules.inline.reflinkSearch.exec(maskedSrc)) != null) {
+                        if (links.includes(match[0].slice(match[0].lastIndexOf('[') + 1, -1))) {
+                            maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
+                        }
+                    }
+                }
+            }
+            // Mask out other blocks
+            while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
+                maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
+            }
+            // Mask out escaped characters
+            while ((match = this.tokenizer.rules.inline.anyPunctuation.exec(maskedSrc)) != null) {
+                maskedSrc = maskedSrc.slice(0, match.index) + '++' + maskedSrc.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);
+            }
+            while (src) {
+                if (!keepPrevChar) {
+                    prevChar = '';
+                }
+                keepPrevChar = false;
+                // extensions
+                if (this.options.extensions
+                    && this.options.extensions.inline
+                    && this.options.extensions.inline.some((extTokenizer) => {
+                        if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
+                            src = src.substring(token.raw.length);
+                            tokens.push(token);
+                            return true;
+                        }
+                        return false;
+                    })) {
+                    continue;
+                }
+                // escape
+                if (token = this.tokenizer.escape(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // tag
+                if (token = this.tokenizer.tag(src)) {
+                    src = src.substring(token.raw.length);
+                    lastToken = tokens[tokens.length - 1];
+                    if (lastToken && token.type === 'text' && lastToken.type === 'text') {
+                        lastToken.raw += token.raw;
+                        lastToken.text += token.text;
+                    }
+                    else {
+                        tokens.push(token);
+                    }
+                    continue;
+                }
+                // link
+                if (token = this.tokenizer.link(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // reflink, nolink
+                if (token = this.tokenizer.reflink(src, this.tokens.links)) {
+                    src = src.substring(token.raw.length);
+                    lastToken = tokens[tokens.length - 1];
+                    if (lastToken && token.type === 'text' && lastToken.type === 'text') {
+                        lastToken.raw += token.raw;
+                        lastToken.text += token.text;
+                    }
+                    else {
+                        tokens.push(token);
+                    }
+                    continue;
+                }
+                // em & strong
+                if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // code
+                if (token = this.tokenizer.codespan(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // br
+                if (token = this.tokenizer.br(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // del (gfm)
+                if (token = this.tokenizer.del(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // autolink
+                if (token = this.tokenizer.autolink(src)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // url (gfm)
+                if (!this.state.inLink && (token = this.tokenizer.url(src))) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    continue;
+                }
+                // text
+                // prevent inlineText consuming extensions by clipping 'src' to extension start
+                cutSrc = src;
+                if (this.options.extensions && this.options.extensions.startInline) {
+                    let startIndex = Infinity;
+                    const tempSrc = src.slice(1);
+                    let tempStart;
+                    this.options.extensions.startInline.forEach((getStartIndex) => {
+                        tempStart = getStartIndex.call({ lexer: this }, tempSrc);
+                        if (typeof tempStart === 'number' && tempStart >= 0) {
+                            startIndex = Math.min(startIndex, tempStart);
+                        }
+                    });
+                    if (startIndex < Infinity && startIndex >= 0) {
+                        cutSrc = src.substring(0, startIndex + 1);
+                    }
+                }
+                if (token = this.tokenizer.inlineText(cutSrc)) {
+                    src = src.substring(token.raw.length);
+                    if (token.raw.slice(-1) !== '_') { // Track prevChar before string of ____ started
+                        prevChar = token.raw.slice(-1);
+                    }
+                    keepPrevChar = true;
+                    lastToken = tokens[tokens.length - 1];
+                    if (lastToken && lastToken.type === 'text') {
+                        lastToken.raw += token.raw;
+                        lastToken.text += token.text;
+                    }
+                    else {
+                        tokens.push(token);
+                    }
+                    continue;
+                }
+                if (src) {
+                    const errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
+                    if (this.options.silent) {
+                        console.error(errMsg);
+                        break;
+                    }
+                    else {
+                        throw new Error(errMsg);
+                    }
+                }
+            }
+            return tokens;
+        }
+    }
+
+    /**
+     * Renderer
+     */
+    class _Renderer {
+        options;
+        constructor(options) {
+            this.options = options || exports.defaults;
+        }
+        code(code, infostring, escaped) {
+            const lang = (infostring || '').match(/^\S*/)?.[0];
+            code = code.replace(/\n$/, '') + '\n';
+            if (!lang) {
+                return '<pre><code>'
+                    + (escaped ? code : escape$1(code, true))
+                    + '</code></pre>\n';
+            }
+            return '<pre><code class="language-'
+                + escape$1(lang)
+                + '">'
+                + (escaped ? code : escape$1(code, true))
+                + '</code></pre>\n';
+        }
+        blockquote(quote) {
+            return `<blockquote>\n${quote}</blockquote>\n`;
+        }
+        html(html, block) {
+            return html;
+        }
+        heading(text, level, raw) {
+            // ignore IDs
+            return `<h${level}>${text}</h${level}>\n`;
+        }
+        hr() {
+            return '<hr>\n';
+        }
+        list(body, ordered, start) {
+            const type = ordered ? 'ol' : 'ul';
+            const startatt = (ordered && start !== 1) ? (' start="' + start + '"') : '';
+            return '<' + type + startatt + '>\n' + body + '</' + type + '>\n';
+        }
+        listitem(text, task, checked) {
+            return `<li>${text}</li>\n`;
+        }
+        checkbox(checked) {
+            return '<input '
+                + (checked ? 'checked="" ' : '')
+                + 'disabled="" type="checkbox">';
+        }
+        paragraph(text) {
+            return `<p>${text}</p>\n`;
+        }
+        table(header, body) {
+            if (body)
+                body = `<tbody>${body}</tbody>`;
+            return '<table>\n'
+                + '<thead>\n'
+                + header
+                + '</thead>\n'
+                + body
+                + '</table>\n';
+        }
+        tablerow(content) {
+            return `<tr>\n${content}</tr>\n`;
+        }
+        tablecell(content, flags) {
+            const type = flags.header ? 'th' : 'td';
+            const tag = flags.align
+                ? `<${type} align="${flags.align}">`
+                : `<${type}>`;
+            return tag + content + `</${type}>\n`;
+        }
+        /**
+         * span level renderer
+         */
+        strong(text) {
+            return `<strong>${text}</strong>`;
+        }
+        em(text) {
+            return `<em>${text}</em>`;
+        }
+        codespan(text) {
+            return `<code>${text}</code>`;
+        }
+        br() {
+            return '<br>';
+        }
+        del(text) {
+            return `<del>${text}</del>`;
+        }
+        link(href, title, text) {
+            const cleanHref = cleanUrl(href);
+            if (cleanHref === null) {
+                return text;
+            }
+            href = cleanHref;
+            let out = '<a href="' + href + '"';
+            if (title) {
+                out += ' title="' + title + '"';
+            }
+            out += '>' + text + '</a>';
+            return out;
+        }
+        image(href, title, text) {
+            const cleanHref = cleanUrl(href);
+            if (cleanHref === null) {
+                return text;
+            }
+            href = cleanHref;
+            let out = `<img src="${href}" alt="${text}"`;
+            if (title) {
+                out += ` title="${title}"`;
+            }
+            out += '>';
+            return out;
+        }
+        text(text) {
+            return text;
+        }
+    }
+
+    /**
+     * TextRenderer
+     * returns only the textual part of the token
+     */
+    class _TextRenderer {
+        // no need for block level renderers
+        strong(text) {
+            return text;
+        }
+        em(text) {
+            return text;
+        }
+        codespan(text) {
+            return text;
+        }
+        del(text) {
+            return text;
+        }
+        html(text) {
+            return text;
+        }
+        text(text) {
+            return text;
+        }
+        link(href, title, text) {
+            return '' + text;
+        }
+        image(href, title, text) {
+            return '' + text;
+        }
+        br() {
+            return '';
+        }
+    }
+
+    /**
+     * Parsing & Compiling
+     */
+    class _Parser {
+        options;
+        renderer;
+        textRenderer;
+        constructor(options) {
+            this.options = options || exports.defaults;
+            this.options.renderer = this.options.renderer || new _Renderer();
+            this.renderer = this.options.renderer;
+            this.renderer.options = this.options;
+            this.textRenderer = new _TextRenderer();
+        }
+        /**
+         * Static Parse Method
+         */
+        static parse(tokens, options) {
+            const parser = new _Parser(options);
+            return parser.parse(tokens);
+        }
+        /**
+         * Static Parse Inline Method
+         */
+        static parseInline(tokens, options) {
+            const parser = new _Parser(options);
+            return parser.parseInline(tokens);
+        }
+        /**
+         * Parse Loop
+         */
+        parse(tokens, top = true) {
+            let out = '';
+            for (let i = 0; i < tokens.length; i++) {
+                const token = tokens[i];
+                // Run any renderer extensions
+                if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
+                    const genericToken = token;
+                    const ret = this.options.extensions.renderers[genericToken.type].call({ parser: this }, genericToken);
+                    if (ret !== false || !['space', 'hr', 'heading', 'code', 'table', 'blockquote', 'list', 'html', 'paragraph', 'text'].includes(genericToken.type)) {
+                        out += ret || '';
+                        continue;
+                    }
+                }
+                switch (token.type) {
+                    case 'space': {
+                        continue;
+                    }
+                    case 'hr': {
+                        out += this.renderer.hr();
+                        continue;
+                    }
+                    case 'heading': {
+                        const headingToken = token;
+                        out += this.renderer.heading(this.parseInline(headingToken.tokens), headingToken.depth, unescape(this.parseInline(headingToken.tokens, this.textRenderer)));
+                        continue;
+                    }
+                    case 'code': {
+                        const codeToken = token;
+                        out += this.renderer.code(codeToken.text, codeToken.lang, !!codeToken.escaped);
+                        continue;
+                    }
+                    case 'table': {
+                        const tableToken = token;
+                        let header = '';
+                        // header
+                        let cell = '';
+                        for (let j = 0; j < tableToken.header.length; j++) {
+                            cell += this.renderer.tablecell(this.parseInline(tableToken.header[j].tokens), { header: true, align: tableToken.align[j] });
+                        }
+                        header += this.renderer.tablerow(cell);
+                        let body = '';
+                        for (let j = 0; j < tableToken.rows.length; j++) {
+                            const row = tableToken.rows[j];
+                            cell = '';
+                            for (let k = 0; k < row.length; k++) {
+                                cell += this.renderer.tablecell(this.parseInline(row[k].tokens), { header: false, align: tableToken.align[k] });
+                            }
+                            body += this.renderer.tablerow(cell);
+                        }
+                        out += this.renderer.table(header, body);
+                        continue;
+                    }
+                    case 'blockquote': {
+                        const blockquoteToken = token;
+                        const body = this.parse(blockquoteToken.tokens);
+                        out += this.renderer.blockquote(body);
+                        continue;
+                    }
+                    case 'list': {
+                        const listToken = token;
+                        const ordered = listToken.ordered;
+                        const start = listToken.start;
+                        const loose = listToken.loose;
+                        let body = '';
+                        for (let j = 0; j < listToken.items.length; j++) {
+                            const item = listToken.items[j];
+                            const checked = item.checked;
+                            const task = item.task;
+                            let itemBody = '';
+                            if (item.task) {
+                                const checkbox = this.renderer.checkbox(!!checked);
+                                if (loose) {
+                                    if (item.tokens.length > 0 && item.tokens[0].type === 'paragraph') {
+                                        item.tokens[0].text = checkbox + ' ' + item.tokens[0].text;
+                                        if (item.tokens[0].tokens && item.tokens[0].tokens.length > 0 && item.tokens[0].tokens[0].type === 'text') {
+                                            item.tokens[0].tokens[0].text = checkbox + ' ' + item.tokens[0].tokens[0].text;
+                                        }
+                                    }
+                                    else {
+                                        item.tokens.unshift({
+                                            type: 'text',
+                                            text: checkbox + ' '
+                                        });
+                                    }
+                                }
+                                else {
+                                    itemBody += checkbox + ' ';
+                                }
+                            }
+                            itemBody += this.parse(item.tokens, loose);
+                            body += this.renderer.listitem(itemBody, task, !!checked);
+                        }
+                        out += this.renderer.list(body, ordered, start);
+                        continue;
+                    }
+                    case 'html': {
+                        const htmlToken = token;
+                        out += this.renderer.html(htmlToken.text, htmlToken.block);
+                        continue;
+                    }
+                    case 'paragraph': {
+                        const paragraphToken = token;
+                        out += this.renderer.paragraph(this.parseInline(paragraphToken.tokens));
+                        continue;
+                    }
+                    case 'text': {
+                        let textToken = token;
+                        let body = textToken.tokens ? this.parseInline(textToken.tokens) : textToken.text;
+                        while (i + 1 < tokens.length && tokens[i + 1].type === 'text') {
+                            textToken = tokens[++i];
+                            body += '\n' + (textToken.tokens ? this.parseInline(textToken.tokens) : textToken.text);
+                        }
+                        out += top ? this.renderer.paragraph(body) : body;
+                        continue;
+                    }
+                    default: {
+                        const errMsg = 'Token with "' + token.type + '" type was not found.';
+                        if (this.options.silent) {
+                            console.error(errMsg);
+                            return '';
+                        }
+                        else {
+                            throw new Error(errMsg);
+                        }
+                    }
+                }
+            }
+            return out;
+        }
+        /**
+         * Parse Inline Tokens
+         */
+        parseInline(tokens, renderer) {
+            renderer = renderer || this.renderer;
+            let out = '';
+            for (let i = 0; i < tokens.length; i++) {
+                const token = tokens[i];
+                // Run any renderer extensions
+                if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
+                    const ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
+                    if (ret !== false || !['escape', 'html', 'link', 'image', 'strong', 'em', 'codespan', 'br', 'del', 'text'].includes(token.type)) {
+                        out += ret || '';
+                        continue;
+                    }
+                }
+                switch (token.type) {
+                    case 'escape': {
+                        const escapeToken = token;
+                        out += renderer.text(escapeToken.text);
+                        break;
+                    }
+                    case 'html': {
+                        const tagToken = token;
+                        out += renderer.html(tagToken.text);
+                        break;
+                    }
+                    case 'link': {
+                        const linkToken = token;
+                        out += renderer.link(linkToken.href, linkToken.title, this.parseInline(linkToken.tokens, renderer));
+                        break;
+                    }
+                    case 'image': {
+                        const imageToken = token;
+                        out += renderer.image(imageToken.href, imageToken.title, imageToken.text);
+                        break;
+                    }
+                    case 'strong': {
+                        const strongToken = token;
+                        out += renderer.strong(this.parseInline(strongToken.tokens, renderer));
+                        break;
+                    }
+                    case 'em': {
+                        const emToken = token;
+                        out += renderer.em(this.parseInline(emToken.tokens, renderer));
+                        break;
+                    }
+                    case 'codespan': {
+                        const codespanToken = token;
+                        out += renderer.codespan(codespanToken.text);
+                        break;
+                    }
+                    case 'br': {
+                        out += renderer.br();
+                        break;
+                    }
+                    case 'del': {
+                        const delToken = token;
+                        out += renderer.del(this.parseInline(delToken.tokens, renderer));
+                        break;
+                    }
+                    case 'text': {
+                        const textToken = token;
+                        out += renderer.text(textToken.text);
+                        break;
+                    }
+                    default: {
+                        const errMsg = 'Token with "' + token.type + '" type was not found.';
+                        if (this.options.silent) {
+                            console.error(errMsg);
+                            return '';
+                        }
+                        else {
+                            throw new Error(errMsg);
+                        }
+                    }
+                }
+            }
+            return out;
+        }
+    }
+
+    class _Hooks {
+        options;
+        constructor(options) {
+            this.options = options || exports.defaults;
+        }
+        static passThroughHooks = new Set([
+            'preprocess',
+            'postprocess',
+            'processAllTokens'
+        ]);
+        /**
+         * Process markdown before marked
+         */
+        preprocess(markdown) {
+            return markdown;
+        }
+        /**
+         * Process HTML after marked is finished
+         */
+        postprocess(html) {
+            return html;
+        }
+        /**
+         * Process all tokens before walk tokens
+         */
+        processAllTokens(tokens) {
+            return tokens;
+        }
+    }
+
+    class Marked {
+        defaults = _getDefaults();
+        options = this.setOptions;
+        parse = this.#parseMarkdown(_Lexer.lex, _Parser.parse);
+        parseInline = this.#parseMarkdown(_Lexer.lexInline, _Parser.parseInline);
+        Parser = _Parser;
+        Renderer = _Renderer;
+        TextRenderer = _TextRenderer;
+        Lexer = _Lexer;
+        Tokenizer = _Tokenizer;
+        Hooks = _Hooks;
+        constructor(...args) {
+            this.use(...args);
+        }
+        /**
+         * Run callback for every token
+         */
+        walkTokens(tokens, callback) {
+            let values = [];
+            for (const token of tokens) {
+                values = values.concat(callback.call(this, token));
+                switch (token.type) {
+                    case 'table': {
+                        const tableToken = token;
+                        for (const cell of tableToken.header) {
+                            values = values.concat(this.walkTokens(cell.tokens, callback));
+                        }
+                        for (const row of tableToken.rows) {
+                            for (const cell of row) {
+                                values = values.concat(this.walkTokens(cell.tokens, callback));
+                            }
+                        }
+                        break;
+                    }
+                    case 'list': {
+                        const listToken = token;
+                        values = values.concat(this.walkTokens(listToken.items, callback));
+                        break;
+                    }
+                    default: {
+                        const genericToken = token;
+                        if (this.defaults.extensions?.childTokens?.[genericToken.type]) {
+                            this.defaults.extensions.childTokens[genericToken.type].forEach((childTokens) => {
+                                const tokens = genericToken[childTokens].flat(Infinity);
+                                values = values.concat(this.walkTokens(tokens, callback));
+                            });
+                        }
+                        else if (genericToken.tokens) {
+                            values = values.concat(this.walkTokens(genericToken.tokens, callback));
+                        }
+                    }
+                }
+            }
+            return values;
+        }
+        use(...args) {
+            const extensions = this.defaults.extensions || { renderers: {}, childTokens: {} };
+            args.forEach((pack) => {
+                // copy options to new object
+                const opts = { ...pack };
+                // set async to true if it was set to true before
+                opts.async = this.defaults.async || opts.async || false;
+                // ==-- Parse "addon" extensions --== //
+                if (pack.extensions) {
+                    pack.extensions.forEach((ext) => {
+                        if (!ext.name) {
+                            throw new Error('extension name required');
+                        }
+                        if ('renderer' in ext) { // Renderer extensions
+                            const prevRenderer = extensions.renderers[ext.name];
+                            if (prevRenderer) {
+                                // Replace extension with func to run new extension but fall back if false
+                                extensions.renderers[ext.name] = function (...args) {
+                                    let ret = ext.renderer.apply(this, args);
+                                    if (ret === false) {
+                                        ret = prevRenderer.apply(this, args);
+                                    }
+                                    return ret;
+                                };
+                            }
+                            else {
+                                extensions.renderers[ext.name] = ext.renderer;
+                            }
+                        }
+                        if ('tokenizer' in ext) { // Tokenizer Extensions
+                            if (!ext.level || (ext.level !== 'block' && ext.level !== 'inline')) {
+                                throw new Error("extension level must be 'block' or 'inline'");
+                            }
+                            const extLevel = extensions[ext.level];
+                            if (extLevel) {
+                                extLevel.unshift(ext.tokenizer);
+                            }
+                            else {
+                                extensions[ext.level] = [ext.tokenizer];
+                            }
+                            if (ext.start) { // Function to check for start of token
+                                if (ext.level === 'block') {
+                                    if (extensions.startBlock) {
+                                        extensions.startBlock.push(ext.start);
+                                    }
+                                    else {
+                                        extensions.startBlock = [ext.start];
+                                    }
+                                }
+                                else if (ext.level === 'inline') {
+                                    if (extensions.startInline) {
+                                        extensions.startInline.push(ext.start);
+                                    }
+                                    else {
+                                        extensions.startInline = [ext.start];
+                                    }
+                                }
+                            }
+                        }
+                        if ('childTokens' in ext && ext.childTokens) { // Child tokens to be visited by walkTokens
+                            extensions.childTokens[ext.name] = ext.childTokens;
+                        }
+                    });
+                    opts.extensions = extensions;
+                }
+                // ==-- Parse "overwrite" extensions --== //
+                if (pack.renderer) {
+                    const renderer = this.defaults.renderer || new _Renderer(this.defaults);
+                    for (const prop in pack.renderer) {
+                        if (!(prop in renderer)) {
+                            throw new Error(`renderer '${prop}' does not exist`);
+                        }
+                        if (prop === 'options') {
+                            // ignore options property
+                            continue;
+                        }
+                        const rendererProp = prop;
+                        const rendererFunc = pack.renderer[rendererProp];
+                        const prevRenderer = renderer[rendererProp];
+                        // Replace renderer with func to run extension, but fall back if false
+                        renderer[rendererProp] = (...args) => {
+                            let ret = rendererFunc.apply(renderer, args);
+                            if (ret === false) {
+                                ret = prevRenderer.apply(renderer, args);
+                            }
+                            return ret || '';
+                        };
+                    }
+                    opts.renderer = renderer;
+                }
+                if (pack.tokenizer) {
+                    const tokenizer = this.defaults.tokenizer || new _Tokenizer(this.defaults);
+                    for (const prop in pack.tokenizer) {
+                        if (!(prop in tokenizer)) {
+                            throw new Error(`tokenizer '${prop}' does not exist`);
+                        }
+                        if (['options', 'rules', 'lexer'].includes(prop)) {
+                            // ignore options, rules, and lexer properties
+                            continue;
+                        }
+                        const tokenizerProp = prop;
+                        const tokenizerFunc = pack.tokenizer[tokenizerProp];
+                        const prevTokenizer = tokenizer[tokenizerProp];
+                        // Replace tokenizer with func to run extension, but fall back if false
+                        // @ts-expect-error cannot type tokenizer function dynamically
+                        tokenizer[tokenizerProp] = (...args) => {
+                            let ret = tokenizerFunc.apply(tokenizer, args);
+                            if (ret === false) {
+                                ret = prevTokenizer.apply(tokenizer, args);
+                            }
+                            return ret;
+                        };
+                    }
+                    opts.tokenizer = tokenizer;
+                }
+                // ==-- Parse Hooks extensions --== //
+                if (pack.hooks) {
+                    const hooks = this.defaults.hooks || new _Hooks();
+                    for (const prop in pack.hooks) {
+                        if (!(prop in hooks)) {
+                            throw new Error(`hook '${prop}' does not exist`);
+                        }
+                        if (prop === 'options') {
+                            // ignore options property
+                            continue;
+                        }
+                        const hooksProp = prop;
+                        const hooksFunc = pack.hooks[hooksProp];
+                        const prevHook = hooks[hooksProp];
+                        if (_Hooks.passThroughHooks.has(prop)) {
+                            // @ts-expect-error cannot type hook function dynamically
+                            hooks[hooksProp] = (arg) => {
+                                if (this.defaults.async) {
+                                    return Promise.resolve(hooksFunc.call(hooks, arg)).then(ret => {
+                                        return prevHook.call(hooks, ret);
+                                    });
+                                }
+                                const ret = hooksFunc.call(hooks, arg);
+                                return prevHook.call(hooks, ret);
+                            };
+                        }
+                        else {
+                            // @ts-expect-error cannot type hook function dynamically
+                            hooks[hooksProp] = (...args) => {
+                                let ret = hooksFunc.apply(hooks, args);
+                                if (ret === false) {
+                                    ret = prevHook.apply(hooks, args);
+                                }
+                                return ret;
+                            };
+                        }
+                    }
+                    opts.hooks = hooks;
+                }
+                // ==-- Parse WalkTokens extensions --== //
+                if (pack.walkTokens) {
+                    const walkTokens = this.defaults.walkTokens;
+                    const packWalktokens = pack.walkTokens;
+                    opts.walkTokens = function (token) {
+                        let values = [];
+                        values.push(packWalktokens.call(this, token));
+                        if (walkTokens) {
+                            values = values.concat(walkTokens.call(this, token));
+                        }
+                        return values;
+                    };
+                }
+                this.defaults = { ...this.defaults, ...opts };
+            });
+            return this;
+        }
+        setOptions(opt) {
+            this.defaults = { ...this.defaults, ...opt };
+            return this;
+        }
+        lexer(src, options) {
+            return _Lexer.lex(src, options ?? this.defaults);
+        }
+        parser(tokens, options) {
+            return _Parser.parse(tokens, options ?? this.defaults);
+        }
+        #parseMarkdown(lexer, parser) {
+            return (src, options) => {
+                const origOpt = { ...options };
+                const opt = { ...this.defaults, ...origOpt };
+                // Show warning if an extension set async to true but the parse was called with async: false
+                if (this.defaults.async === true && origOpt.async === false) {
+                    if (!opt.silent) {
+                        console.warn('marked(): The async option was set to true by an extension. The async: false option sent to parse will be ignored.');
+                    }
+                    opt.async = true;
+                }
+                const throwError = this.#onError(!!opt.silent, !!opt.async);
+                // throw error in case of non string input
+                if (typeof src === 'undefined' || src === null) {
+                    return throwError(new Error('marked(): input parameter is undefined or null'));
+                }
+                if (typeof src !== 'string') {
+                    return throwError(new Error('marked(): input parameter is of type '
+                        + Object.prototype.toString.call(src) + ', string expected'));
+                }
+                if (opt.hooks) {
+                    opt.hooks.options = opt;
+                }
+                if (opt.async) {
+                    return Promise.resolve(opt.hooks ? opt.hooks.preprocess(src) : src)
+                        .then(src => lexer(src, opt))
+                        .then(tokens => opt.hooks ? opt.hooks.processAllTokens(tokens) : tokens)
+                        .then(tokens => opt.walkTokens ? Promise.all(this.walkTokens(tokens, opt.walkTokens)).then(() => tokens) : tokens)
+                        .then(tokens => parser(tokens, opt))
+                        .then(html => opt.hooks ? opt.hooks.postprocess(html) : html)
+                        .catch(throwError);
+                }
+                try {
+                    if (opt.hooks) {
+                        src = opt.hooks.preprocess(src);
+                    }
+                    let tokens = lexer(src, opt);
+                    if (opt.hooks) {
+                        tokens = opt.hooks.processAllTokens(tokens);
+                    }
+                    if (opt.walkTokens) {
+                        this.walkTokens(tokens, opt.walkTokens);
+                    }
+                    let html = parser(tokens, opt);
+                    if (opt.hooks) {
+                        html = opt.hooks.postprocess(html);
+                    }
+                    return html;
+                }
+                catch (e) {
+                    return throwError(e);
+                }
+            };
+        }
+        #onError(silent, async) {
+            return (e) => {
+                e.message += '\nPlease report this to https://github.com/markedjs/marked.';
+                if (silent) {
+                    const msg = '<p>An error occurred:</p><pre>'
+                        + escape$1(e.message + '', true)
+                        + '</pre>';
+                    if (async) {
+                        return Promise.resolve(msg);
+                    }
+                    return msg;
+                }
+                if (async) {
+                    return Promise.reject(e);
+                }
+                throw e;
+            };
+        }
+    }
+
+    const markedInstance = new Marked();
+    function marked(src, opt) {
+        return markedInstance.parse(src, opt);
+    }
+    /**
+     * Sets the default options.
+     *
+     * @param options Hash of options
+     */
+    marked.options =
+        marked.setOptions = function (options) {
+            markedInstance.setOptions(options);
+            marked.defaults = markedInstance.defaults;
+            changeDefaults(marked.defaults);
+            return marked;
+        };
+    /**
+     * Gets the original marked default options.
+     */
+    marked.getDefaults = _getDefaults;
+    marked.defaults = exports.defaults;
+    /**
+     * Use Extension
+     */
+    marked.use = function (...args) {
+        markedInstance.use(...args);
+        marked.defaults = markedInstance.defaults;
+        changeDefaults(marked.defaults);
+        return marked;
+    };
+    /**
+     * Run callback for every token
+     */
+    marked.walkTokens = function (tokens, callback) {
+        return markedInstance.walkTokens(tokens, callback);
+    };
+    /**
+     * Compiles markdown to HTML without enclosing `p` tag.
+     *
+     * @param src String of markdown source to be compiled
+     * @param options Hash of options
+     * @return String of compiled HTML
+     */
+    marked.parseInline = markedInstance.parseInline;
+    /**
+     * Expose
+     */
+    marked.Parser = _Parser;
+    marked.parser = _Parser.parse;
+    marked.Renderer = _Renderer;
+    marked.TextRenderer = _TextRenderer;
+    marked.Lexer = _Lexer;
+    marked.lexer = _Lexer.lex;
+    marked.Tokenizer = _Tokenizer;
+    marked.Hooks = _Hooks;
+    marked.parse = marked;
+    const options = marked.options;
+    const setOptions = marked.setOptions;
+    const use = marked.use;
+    const walkTokens = marked.walkTokens;
+    const parseInline = marked.parseInline;
+    const parse = marked;
+    const parser = _Parser.parse;
+    const lexer = _Lexer.lex;
+
+    exports.Hooks = _Hooks;
+    exports.Lexer = _Lexer;
+    exports.Marked = Marked;
+    exports.Parser = _Parser;
+    exports.Renderer = _Renderer;
+    exports.TextRenderer = _TextRenderer;
+    exports.Tokenizer = _Tokenizer;
+    exports.getDefaults = _getDefaults;
+    exports.lexer = lexer;
+    exports.marked = marked;
+    exports.options = options;
+    exports.parse = parse;
+    exports.parseInline = parseInline;
+    exports.parser = parser;
+    exports.setOptions = setOptions;
+    exports.use = use;
+    exports.walkTokens = walkTokens;
+
+}));
+//# sourceMappingURL=marked.umd.js.map
+</script>
+<script>window.DOCS={"01-navegacao": "# 01 · Navegação\n\nComandos para saber onde você está e se mover pelo sistema de arquivos.\n\n| Comando | Resumo |\n|---------|--------|\n| [`pwd`](#pwd) | Mostra o diretório atual |\n| [`ls`](#ls) | Lista o conteúdo de um diretório |\n| [`.`](#--diretório-atual) | Atalho para o diretório atual |\n| [`..`](#---diretório-pai) | Atalho para o diretório pai |\n| [`cd`](#cd) | Muda de diretório |\n\n---\n\n## `pwd`\n\n**Para que serve:** mostra o caminho completo (absoluto) do diretório em que você está. Significa *print working directory*.\n\n**Como usar**\n\n```bash\npwd [opções]\n```\n\n```bash\n$ pwd\n/home/maria/projetos\n```\n\n**Como se comporta**\n\n- Não recebe argumentos; só imprime o caminho atual.\n- Por padrão (`-L`) mostra o caminho lógico, ou seja, mantém os links simbólicos que você usou para chegar lá.\n- Com `-P` mostra o caminho físico, resolvendo os links simbólicos.\n\n**Opções**\n\n| Opção | O que faz |\n|-------|-----------|\n| `-L` | Caminho lógico (padrão). Mantém links simbólicos no caminho |\n| `-P` | Caminho físico. Resolve todos os links simbólicos |\n| `--help` | Mostra a ajuda |\n| `--version` | Mostra a versão |\n\n---\n\n## `ls`\n\n**Para que serve:** lista arquivos e diretórios. Significa *list*.\n\n**Como usar**\n\n```bash\nls [opções] [caminho...]\n```\n\n```bash\nls                 # conteúdo do diretório atual\nls /etc            # conteúdo de /etc\nls -lah ~          # lista detalhada, com ocultos, da sua home\nls *.txt           # só arquivos .txt\n```\n\n**Como se comporta**\n\n- Sem argumentos lista o diretório atual, em ordem alfabética.\n- Arquivos que começam com `.` são **ocultos** e só aparecem com `-a` ou `-A`.\n- Se o argumento é um arquivo, mostra só ele. Se é um diretório, mostra o conteúdo.\n- Com `-l` cada linha mostra: tipo e permissões, nº de links, dono, grupo, tamanho, data e nome.\n\n```\n-rwxr-xr-- 1 maria devs 4096 out 10 09:30 script.sh\n│└┬┘└┬┘└┬┘   │     │     │       │         └─ nome\n│ │  │  │    │     │     │       └─ data de modificação\n│ │  │  │    │     │     └─ tamanho em bytes\n│ │  │  │    │     └─ grupo\n│ │  │  │    └─ dono\n│ │  │  └─ permissões de outros\n│ │  └─ permissões do grupo\n│ └─ permissões do dono\n└─ tipo (- arquivo, d diretório, l link)\n```\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-l` | Formato longo (permissões, dono, tamanho, data) | `ls -l` |\n| `-a` | Mostra todos, incluindo ocultos, `.` e `..` | `ls -a` |\n| `-A` | Mostra ocultos, mas sem `.` e `..` | `ls -A` |\n| `-h` | Tamanhos legíveis (K, M, G). Use com `-l` | `ls -lh` |\n| `-R` | Recursivo: entra nos subdiretórios | `ls -R /etc` |\n| `-t` | Ordena por data de modificação (mais novo primeiro) | `ls -lt` |\n| `-r` | Inverte a ordem | `ls -ltr` |\n| `-S` | Ordena por tamanho (maior primeiro) | `ls -lS` |\n| `-d` | Mostra o próprio diretório, não o conteúdo | `ls -ld /etc` |\n| `-1` | Um item por linha | `ls -1` |\n| `-i` | Mostra o número do inode | `ls -i` |\n| `-F` | Marca tipos: `/` diretório, `*` executável, `@` link | `ls -F` |\n| `--color=auto` | Colore por tipo de arquivo | `ls --color=auto` |\n\n---\n\n## `.` (diretório atual)\n\n**Para que serve:** representa o diretório em que você está.\n\n**Como usar**\n\n```bash\n./script.sh        # executa um script que está no diretório atual\ncp /tmp/foto.png . # copia para o diretório atual\nls .               # lista o diretório atual (igual a ls)\n```\n\n**Como se comporta**\n\n- Existe em todo diretório como uma entrada especial (aparece em `ls -a`).\n- O shell **não** procura executáveis no diretório atual por segurança, por isso é preciso escrever `./programa` para rodar algo que está aqui.\n- `./arquivo` e `arquivo` apontam para o mesmo lugar em comandos como `cat` e `cp`, mas só `./arquivo` funciona para executar.\n\n> `. arquivo` (ponto, espaço, arquivo) é outra coisa: é o comando `source`, que executa o arquivo no shell atual.\n\n---\n\n## `..` (diretório pai)\n\n**Para que serve:** representa o diretório acima do atual.\n\n**Como usar**\n\n```bash\ncd ..              # sobe um nível\ncd ../..           # sobe dois níveis\nls ..              # lista o diretório pai\ncp arquivo ../     # copia para o diretório pai\n```\n\n**Como se comporta**\n\n- Pode ser encadeado: `../../pasta` sobe dois níveis e entra em `pasta`.\n- Na raiz (`/`), o pai de `/` é ela mesma.\n\n---\n\n## `cd`\n\n**Para que serve:** muda o diretório atual. Significa *change directory*.\n\n**Como usar**\n\n```bash\ncd [diretório]\n```\n\n```bash\ncd /var/log        # caminho absoluto\ncd projetos        # caminho relativo\ncd ..              # sobe um nível\ncd                 # vai para a sua home (~)\ncd ~               # idem\ncd -               # volta ao diretório anterior\ncd \"Meus Documentos\"   # nomes com espaço precisam de aspas\n```\n\n**Como se comporta**\n\n- É um comando interno (*builtin*) do shell, não um programa separado, porque precisa alterar o estado do próprio shell.\n- Sem argumentos, vai para a home (`$HOME`).\n- Caminho que começa com `/` é absoluto; os demais são relativos ao diretório atual.\n- Se o diretório não existe ou você não tem permissão de execução nele, mostra erro e permanece onde está.\n- `cd -` alterna entre os dois últimos diretórios e imprime o destino.\n\n**Atalhos e opções**\n\n| Forma | O que faz |\n|-------|-----------|\n| `cd` ou `cd ~` | Vai para a home |\n| `cd -` | Volta ao diretório anterior |\n| `cd ..` | Sobe um nível |\n| `cd /` | Vai para a raiz |\n| `cd ~usuario` | Vai para a home de outro usuário |\n| `-L` | Segue links simbólicos (padrão) |\n| `-P` | Usa a estrutura física, resolvendo links simbólicos |\n", "02-ajuda": "# 02 · Ajuda\n\nComo descobrir o que um comando faz sem sair do terminal.\n\n| Comando | Resumo |\n|---------|--------|\n| [`--help`](#--help) | Resumo rápido de uso de um comando |\n| [`man`](#man) | Manual completo |\n\n---\n\n## `--help`\n\n**Para que serve:** mostra um resumo de uso e das opções de um comando.\n\n**Como usar**\n\n```bash\ncomando --help\n```\n\n```bash\nls --help\ncp --help | less     # paginado, para textos longos\n```\n\n**Como se comporta**\n\n- Imprime direto no terminal e volta ao prompt (sem paginação).\n- É rápido, mas resumido. Para detalhes, use `man`.\n- Funciona na maioria dos programas GNU. Comandos internos do bash (como `cd`) usam `help cd`.\n- Alguns programas aceitam `-h` ou `-?` no lugar.\n\n**Variações**\n\n| Forma | O que faz |\n|-------|-----------|\n| `comando --help` | Ajuda do comando |\n| `comando -h` | Ajuda curta (em alguns programas) |\n| `help comando` | Ajuda de comandos internos do bash (`cd`, `echo`, `type`...) |\n| `comando --version` | Mostra a versão |\n\n---\n\n## `man`\n\n**Para que serve:** abre o manual completo de um comando. Significa *manual*.\n\n**Como usar**\n\n```bash\nman [opções] [seção] comando\n```\n\n```bash\nman ls          # manual do ls\nman 5 passwd    # manual do arquivo /etc/passwd (seção 5)\nman -k copiar   # busca páginas cujo nome/descrição contém \"copiar\"\n```\n\n**Como se comporta**\n\n- Abre o manual em um paginador (normalmente `less`). Para sair, pressione `q`.\n- Cada página tem seções: NAME, SYNOPSIS, DESCRIPTION, OPTIONS, EXAMPLES, SEE ALSO etc.\n- Se existe mais de uma página com o mesmo nome (como `passwd`), mostra a de menor seção, a não ser que você indique a seção.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-k palavra` | Busca a palavra nos nomes e descrições (igual a `apropos`) | `man -k network` |\n| `-f comando` | Descrição de uma linha (igual a `whatis`) | `man -f ls` |\n| `-a` | Mostra todas as páginas com esse nome, uma após a outra | `man -a passwd` |\n| `-w` | Mostra o caminho do arquivo da página | `man -w ls` |\n| `-L idioma` | Escolhe o idioma, se instalado | `man -L pt_BR ls` |\n\n**Seções do manual**\n\n| Seção | Conteúdo |\n|-------|----------|\n| 1 | Comandos de usuário |\n| 2 | Chamadas de sistema |\n| 3 | Funções de biblioteca (C) |\n| 4 | Arquivos de dispositivo |\n| 5 | Formatos de arquivo e configuração (ex.: `passwd`, `sudoers`) |\n| 6 | Jogos |\n| 7 | Diversos |\n| 8 | Comandos de administração (ex.: `useradd`) |\n\n**Navegando dentro do `man`**\n\n| Tecla | Ação |\n|-------|------|\n| `Espaço` / `b` | Página abaixo / acima |\n| `↑` `↓` | Linha por linha |\n| `/texto` | Busca para frente |\n| `n` / `N` | Próxima / anterior ocorrência |\n| `g` / `G` | Início / fim |\n| `h` | Ajuda do paginador |\n| `q` | Sai |\n", "03-arquivos": "# 03 · Arquivos\n\nCriar, copiar, ler, escrever e remover arquivos e diretórios.\n\n| Comando | Resumo |\n|---------|--------|\n| [`touch`](#touch) | Cria arquivo vazio ou atualiza datas |\n| [`mkdir`](#mkdir) | Cria diretórios |\n| [`rm`](#rm) | Remove arquivos e diretórios |\n| [`cat`](#cat) | Mostra/concatena o conteúdo de arquivos |\n| [`cp`](#cp) | Copia arquivos e diretórios |\n| [`echo`](#echo) | Imprime texto |\n| [`>` e `>>`](#e--redirecionamento) | Grava a saída de um comando em arquivo |\n| [`head`](#head) | Mostra o início de um arquivo |\n| [`tail`](#tail) | Mostra o fim de um arquivo |\n| [`nano`](#nano) | Editor de texto no terminal |\n\n---\n\n## `touch`\n\n**Para que serve:** cria um arquivo vazio. Se o arquivo já existe, só atualiza as datas de acesso/modificação.\n\n**Como usar**\n\n```bash\ntouch [opções] arquivo...\n```\n\n```bash\ntouch notas.txt              # cria notas.txt vazio\ntouch a.txt b.txt c.txt      # cria vários de uma vez\ntouch -c notas.txt           # só atualiza a data; não cria se não existir\n```\n\n**Como se comporta**\n\n- Arquivo inexistente: cria vazio (0 bytes).\n- Arquivo existente: **não** altera o conteúdo, apenas a data.\n- Não cria diretórios intermediários: `touch pasta/a.txt` falha se `pasta` não existir.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-c` | Não cria o arquivo se ele não existir | `touch -c x.txt` |\n| `-a` | Altera só a data de acesso | `touch -a x.txt` |\n| `-m` | Altera só a data de modificação | `touch -m x.txt` |\n| `-t [[CC]AAMMDDhhmm]` | Define data/hora específica | `touch -t 202610110930 x.txt` |\n| `-d \"texto\"` | Define data a partir de texto | `touch -d \"yesterday\" x.txt` |\n| `-r ref` | Copia as datas de outro arquivo | `touch -r a.txt b.txt` |\n\n---\n\n## `mkdir`\n\n**Para que serve:** cria diretórios. Significa *make directory*.\n\n**Como usar**\n\n```bash\nmkdir [opções] diretório...\n```\n\n```bash\nmkdir projetos\nmkdir -p projetos/linux/scripts     # cria toda a cadeia\nmkdir -m 700 privado                # cria com permissão 700\n```\n\n**Como se comporta**\n\n- Falha se o diretório já existe (a não ser que use `-p`).\n- Falha se o diretório pai não existe (a não ser que use `-p`).\n- Com `-p`, não dá erro se já existir e cria os pais que faltam.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-p` | Cria os diretórios pai se necessário; sem erro se já existir | `mkdir -p a/b/c` |\n| `-v` | Mostra uma mensagem para cada diretório criado | `mkdir -v pasta` |\n| `-m modo` | Define as permissões na criação | `mkdir -m 755 pasta` |\n\n---\n\n## `rm`\n\n**Para que serve:** remove arquivos e diretórios. Significa *remove*.\n\n> ⚠️ **Não há lixeira.** O que o `rm` apaga não volta. Confira o caminho antes de apertar Enter.\n\n**Como usar**\n\n```bash\nrm [opções] arquivo...\n```\n\n```bash\nrm antigo.txt              # remove um arquivo\nrm -i *.log                # pergunta antes de cada remoção\nrm -r pasta                # remove diretório e conteúdo\nrm -d pasta_vazia          # remove só diretório vazio\n```\n\n**Como se comporta**\n\n- Sem `-r`, recusa remover diretórios.\n- Sem `-f`, pergunta quando o arquivo está protegido contra escrita.\n- Remove a entrada no sistema de arquivos e não envia para lixeira.\n- Curingas (`*`) são expandidos pelo shell **antes** do comando rodar; `rm *` apaga tudo no diretório atual.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-r`, `-R` | Recursivo: remove diretórios e tudo dentro | `rm -r pasta` |\n| `-f` | Força: não pergunta e ignora arquivos inexistentes | `rm -f x.txt` |\n| `-i` | Pergunta antes de cada remoção | `rm -i x.txt` |\n| `-I` | Pergunta uma vez se for remover mais de 3 arquivos ou recursivo | `rm -I *` |\n| `-d` | Remove diretórios vazios | `rm -d pasta` |\n| `-v` | Mostra o que foi removido | `rm -v x.txt` |\n| `--preserve-root` | Recusa operar recursivamente em `/` (já é padrão) | |\n\n---\n\n## `cat`\n\n**Para que serve:** mostra o conteúdo de arquivos e concatena vários. Vem de *concatenate*.\n\n**Como usar**\n\n```bash\ncat [opções] [arquivo...]\n```\n\n```bash\ncat notas.txt                  # mostra o arquivo\ncat a.txt b.txt                # mostra a seguido de b\ncat a.txt b.txt > junto.txt    # junta em um novo arquivo\ncat -n script.sh               # com número de linhas\n```\n\n**Como se comporta**\n\n- Imprime o arquivo inteiro de uma vez; para arquivos grandes, prefira `less`, `head` ou `tail`.\n- Sem argumentos, lê o teclado (entrada padrão) até `Ctrl+D`.\n- Em arquivo binário, o terminal pode mostrar caracteres estranhos.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-n` | Numera todas as linhas | `cat -n x.txt` |\n| `-b` | Numera só linhas não vazias | `cat -b x.txt` |\n| `-s` | Comprime linhas vazias repetidas em uma | `cat -s x.txt` |\n| `-E` | Mostra `$` no fim de cada linha | `cat -E x.txt` |\n| `-T` | Mostra tabs como `^I` | `cat -T x.txt` |\n| `-A` | Mostra tudo, incluindo caracteres invisíveis | `cat -A x.txt` |\n\n---\n\n## `cp`\n\n**Para que serve:** copia arquivos e diretórios. Significa *copy*.\n\n**Como usar**\n\n```bash\ncp [opções] origem destino\ncp [opções] origem... diretório_destino/\n```\n\n```bash\ncp a.txt b.txt                 # copia a.txt para b.txt\ncp a.txt pasta/                # copia para dentro de pasta\ncp -r pasta pasta_backup       # copia diretório inteiro\ncp -a /etc/nginx /backup/      # cópia preservando tudo\n```\n\n**Como se comporta**\n\n- Se o destino é um arquivo existente, ele é **sobrescrito sem aviso** (a não ser que use `-i`).\n- Se o destino é um diretório, a cópia vai para dentro dele.\n- Para copiar diretórios é obrigatório `-r` (ou `-a`).\n- Por padrão a cópia recebe a data atual e o dono é quem executou; `-p`/`-a` preservam os originais.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-r`, `-R` | Copia diretórios recursivamente | `cp -r d1 d2` |\n| `-i` | Pergunta antes de sobrescrever | `cp -i a b` |\n| `-n` | Nunca sobrescreve | `cp -n a b` |\n| `-f` | Força: remove o destino se não puder abri-lo | `cp -f a b` |\n| `-u` | Copia só se a origem for mais nova ou o destino não existir | `cp -u a b` |\n| `-v` | Mostra o que está sendo copiado | `cp -v a b` |\n| `-p` | Preserva dono, permissões e datas | `cp -p a b` |\n| `-a` | Modo arquivo: `-r` + preserva tudo + links simbólicos | `cp -a d1 d2` |\n| `-b` | Faz backup do destino antes de sobrescrever | `cp -b a b` |\n\n---\n\n## `echo`\n\n**Para que serve:** imprime um texto (ou o valor de variáveis) na saída.\n\n**Como usar**\n\n```bash\necho [opções] [texto...]\n```\n\n```bash\necho \"Olá, mundo\"\necho $HOME                    # valor de uma variável\necho -e \"linha1\\nlinha2\"      # interpreta \\n\necho -n \"sem quebra de linha\"\n```\n\n**Como se comporta**\n\n- Adiciona uma quebra de linha no final, a menos que use `-n`.\n- Aspas duplas permitem expandir variáveis (`\"$USER\"`); aspas simples imprimem o texto literal (`'$USER'`).\n- Muito usado junto com redirecionamento para gravar em arquivos.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-n` | Não imprime a quebra de linha final | `echo -n \"oi\"` |\n| `-e` | Interpreta sequências com `\\` (`\\n`, `\\t`, `\\\\`) | `echo -e \"a\\tb\"` |\n| `-E` | Não interpreta sequências com `\\` (padrão) | `echo -E \"a\\tb\"` |\n\n---\n\n## `>` e `>>` (redirecionamento)\n\n**Para que serve:** em vez de mostrar a saída de um comando no terminal, grava em um arquivo.\n\n**Como usar**\n\n```bash\necho \"ola meu nome é\" > arquivo.txt     # cria/sobrescreve\necho \"ola meu nome é\" >> arquivo.txt    # acrescenta ao final\n```\n\n**Como se comporta**\n\n| Operador | Comportamento |\n|----------|---------------|\n| `>` | **Apaga** o conteúdo anterior do arquivo e grava o novo. Cria o arquivo se não existir |\n| `>>` | **Acrescenta** ao final, preservando o conteúdo. Cria o arquivo se não existir |\n\n- Quem faz o redirecionamento é o shell, antes de o comando rodar. Por isso `> arquivo.txt` sozinho já cria (ou zera) o arquivo.\n- Um erro comum é usar `>` quando queria `>>` e perder o conteúdo.\n\n**Operadores relacionados**\n\n| Operador | O que faz | Exemplo |\n|----------|-----------|---------|\n| `<` | Usa um arquivo como entrada | `sort < lista.txt` |\n| `2>` | Grava só as mensagens de erro | `ls /x 2> erros.txt` |\n| `2>>` | Acrescenta mensagens de erro | `ls /x 2>> erros.txt` |\n| `&>` | Grava saída e erros juntos (bash) | `cmd &> tudo.txt` |\n| `\\|` | Envia a saída para outro comando (pipe) | `cat x.txt \\| head` |\n| `/dev/null` | \"Buraco negro\": descarta o que for enviado | `cmd > /dev/null` |\n\n---\n\n## `head`\n\n**Para que serve:** mostra o começo de um arquivo (padrão: 10 primeiras linhas).\n\n**Como usar**\n\n```bash\nhead [opções] [arquivo...]\n```\n\n```bash\nhead log.txt            # 10 primeiras linhas\nhead -n 3 log.txt       # 3 primeiras linhas\nhead -c 100 log.txt     # 100 primeiros bytes\n```\n\n**Como se comporta**\n\n- Com mais de um arquivo, imprime um cabeçalho com o nome de cada um.\n- Lê só o necessário, então é rápido mesmo em arquivos enormes.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-n N` | Mostra as N primeiras linhas | `head -n 5 x` |\n| `-n -N` | Mostra tudo **exceto** as N últimas linhas | `head -n -2 x` |\n| `-c N` | Mostra os N primeiros bytes | `head -c 50 x` |\n| `-q` | Não imprime os cabeçalhos com nomes | `head -q a b` |\n| `-v` | Sempre imprime o cabeçalho | `head -v x` |\n\n---\n\n## `tail`\n\n**Para que serve:** mostra o final de um arquivo (padrão: 10 últimas linhas). Muito usado para acompanhar logs.\n\n**Como usar**\n\n```bash\ntail [opções] [arquivo...]\n```\n\n```bash\ntail log.txt                    # 10 últimas linhas\ntail -n 20 log.txt              # 20 últimas\ntail -f /var/log/syslog         # acompanha em tempo real (Ctrl+C sai)\n```\n\n**Como se comporta**\n\n- Com `-f`, o comando **não termina**: continua mostrando novas linhas que chegam ao arquivo até você pressionar `Ctrl+C`.\n- Se o arquivo for rotacionado (log novo), `-f` continua no arquivo antigo; use `-F` para seguir o nome.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-n N` | Mostra as N últimas linhas | `tail -n 5 x` |\n| `-n +N` | Mostra a partir da linha N até o fim | `tail -n +3 x` |\n| `-c N` | Mostra os N últimos bytes | `tail -c 100 x` |\n| `-f` | Segue o arquivo, mostrando novas linhas | `tail -f x` |\n| `-F` | Como `-f`, mas reabre o arquivo se for recriado | `tail -F x` |\n| `-q` | Não imprime cabeçalhos | `tail -q a b` |\n| `-v` | Sempre imprime cabeçalho | `tail -v x` |\n\n---\n\n## `nano`\n\n**Para que serve:** editor de texto simples dentro do terminal, ideal para iniciantes. Os atalhos aparecem na parte de baixo da tela (`^` significa `Ctrl`, `M-` significa `Alt`).\n\n**Como usar**\n\n```bash\nnano [opções] [arquivo]\n```\n\n```bash\nnano notas.txt          # abre (ou cria) notas.txt\nnano +25 script.sh      # abre já na linha 25\nsudo nano /etc/hosts    # editar arquivo de sistema\n```\n\n**Como se comporta**\n\n- Se o arquivo não existe, ele só é criado ao salvar.\n- Funciona como editor comum: digite e use as setas. Os comandos usam `Ctrl`.\n- Ao sair com alterações não salvas, pergunta se quer salvar.\n- Para editar arquivos do sistema (`/etc/...`) é preciso `sudo`.\n\n**Atalhos principais**\n\n| Atalho | Ação |\n|--------|------|\n| `Ctrl+O` | Salva (*write Out*), confirme com Enter |\n| `Ctrl+X` | Sai (pergunta se quer salvar) |\n| `Ctrl+W` | Procura texto |\n| `Ctrl+\\` | Procura e substitui |\n| `Ctrl+K` | Corta a linha atual |\n| `Ctrl+U` | Cola o que foi cortado |\n| `Ctrl+_` | Vai para uma linha/coluna |\n| `Alt+U` / `Alt+E` | Desfaz / refaz |\n| `Ctrl+C` | Mostra posição do cursor |\n| `Ctrl+G` | Ajuda |\n\n**Opções de linha de comando**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `+N` | Abre na linha N | `nano +10 x` |\n| `-l` | Mostra números de linha | `nano -l x` |\n| `-m` | Habilita uso do mouse | `nano -m x` |\n| `-B` | Cria backup (`arquivo~`) ao salvar | `nano -B x` |\n| `-i` | Indentação automática | `nano -i x` |\n| `-w` | Não quebra linhas longas automaticamente | `nano -w x` |\n| `-v` | Modo somente leitura | `nano -v x` |\n", "04-gerenciamento-de-usuarios": "# 04 · Gerenciamento de usuários\n\nQuem sou eu, como virar administrador e como criar/remover usuários.\n\n> Os exemplos assumem **Debian/Ubuntu** (`adduser` e `deluser` são scripts dessas distribuições). Criar e remover usuários exige privilégios de administrador (`sudo`).\n\n| Comando | Resumo |\n|---------|--------|\n| [`whoami`](#whoami) | Mostra o usuário atual |\n| [`sudo -s`](#sudo--s) | Abre um shell como root usando `sudo` |\n| [`su root`](#su-root) | Troca para o usuário root |\n| [`passwd root`](#passwd-root) | Altera a senha de um usuário |\n| [`adduser`](#adduser) | Cria usuário |\n| [`deluser`](#deluser) | Remove usuário (Debian) |\n| [`userdel`](#userdel) | Remove usuário (baixo nível) |\n| [`rm -rf`](#rm--rf) | Remove diretórios à força (ex.: sobras de usuário) |\n| [`adduser usuario grupo`](#adduser-usuario-grupo) | Adiciona usuário a um grupo |\n\n---\n\n## `whoami`\n\n**Para que serve:** imprime o nome do usuário com que você está logado.\n\n**Como usar**\n\n```bash\n$ whoami\nmaria\n$ sudo whoami\nroot\n```\n\n**Como se comporta**\n\n- Mostra o usuário **efetivo** do processo. Dentro de `sudo` ou `su`, mostra `root`.\n- Útil em scripts e para conferir se você realmente virou root.\n\n**Opções**\n\n| Opção | O que faz |\n|-------|-----------|\n| `--help` | Mostra a ajuda |\n| `--version` | Mostra a versão |\n\n> Para ver mais detalhes (UID, GID, grupos), use `id`.\n\n---\n\n## `sudo -s`\n\n**Para que serve:** abrir um shell com privilégios de root, autenticando com a **sua própria senha**.\n\n**Como usar**\n\n```bash\nsudo -s            # shell root mantendo parte do seu ambiente\nsudo -i            # shell de login do root (ambiente do root)\nsudo comando       # executa um único comando como root\nsudo -u maria cmd  # executa como outro usuário\n```\n\n**Como se comporta**\n\n- Pede a **sua** senha (não a do root) e só funciona se você estiver autorizado no `/etc/sudoers` ou no grupo `sudo`.\n- O prompt muda de `$` para `#`.\n- Para sair, digite `exit` ou `Ctrl+D`.\n- A senha fica em cache por alguns minutos (padrão: 15).\n- As ações ficam registradas em log.\n- `-s` inicia o shell mas mantém boa parte do ambiente atual (home etc.); `-i` simula um login completo como root.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-s` | Abre um shell (o definido em `$SHELL`) como root | `sudo -s` |\n| `-i` | Shell de login (ambiente do usuário alvo) | `sudo -i` |\n| `-u usuário` | Executa como o usuário indicado | `sudo -u www-data ls` |\n| `-l` | Lista o que você pode executar com sudo | `sudo -l` |\n| `-k` | Invalida o cache da senha | `sudo -k` |\n| `-v` | Renova o cache da senha | `sudo -v` |\n| `-E` | Preserva as variáveis de ambiente | `sudo -E cmd` |\n| `-b` | Executa em segundo plano | `sudo -b cmd` |\n\n---\n\n## `su root`\n\n**Para que serve:** trocar de usuário. Significa *substitute user* (ou *switch user*). Sem nome, assume `root`.\n\n**Como usar**\n\n```bash\nsu root            # vira root (mantém seu ambiente)\nsu - root          # vira root com ambiente completo (recomendado)\nsu - maria         # vira outro usuário\nsu -c \"cmd\" root   # executa um comando como root e volta\n```\n\n**Como se comporta**\n\n- Pede a senha do **usuário de destino** (a do root, em `su root`).\n- No Ubuntu a conta root vem sem senha por padrão, então `su` falha até que você defina uma senha (veja [`passwd root`](#passwd-root)). Por isso lá se usa `sudo -i`.\n- `su` sem o `-` mantém variáveis e diretório atual; `su -` carrega o ambiente do destino e vai para a home dele.\n- Para voltar ao usuário anterior: `exit`.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-`, `-l`, `--login` | Shell de login: ambiente e diretório do usuário alvo | `su - root` |\n| `-c \"cmd\"` | Executa um único comando e volta | `su -c \"whoami\" root` |\n| `-s shell` | Usa o shell indicado | `su -s /bin/sh maria` |\n| `-p`, `-m` | Preserva o ambiente atual | `su -p root` |\n\n---\n\n## `passwd root`\n\n**Para que serve:** altera a senha de um usuário. Sem argumento, altera a **sua**.\n\n**Como usar**\n\n```bash\npasswd                   # altera a sua senha\nsudo passwd root         # define/altera a senha do root\nsudo passwd maria        # altera a senha da maria\nsudo passwd -l maria     # bloqueia a conta da maria\n```\n\n**Como se comporta**\n\n- Usuário comum só altera a própria senha e precisa informar a senha atual.\n- Como root (ou com `sudo`), altera a senha de qualquer usuário sem precisar da atual.\n- Pede a nova senha duas vezes; a digitação **não aparece** na tela.\n- Aplica regras de qualidade (tamanho mínimo, simplicidade). Root pode ignorá-las com aviso.\n- A senha é guardada de forma criptografada em `/etc/shadow`.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-l` | Bloqueia a conta (senha deixa de funcionar) | `sudo passwd -l maria` |\n| `-u` | Desbloqueia a conta | `sudo passwd -u maria` |\n| `-d` | Remove a senha (conta sem senha, **inseguro**) | `sudo passwd -d maria` |\n| `-e` | Expira a senha: exige nova no próximo login | `sudo passwd -e maria` |\n| `-S` | Mostra o status da senha da conta | `passwd -S maria` |\n| `-n dias` | Mínimo de dias entre trocas | `sudo passwd -n 1 maria` |\n| `-x dias` | Máximo de dias de validade | `sudo passwd -x 90 maria` |\n| `-w dias` | Dias de aviso antes de expirar | `sudo passwd -w 7 maria` |\n\n---\n\n## `adduser`\n\n**Para que serve:** cria um novo usuário. No Debian/Ubuntu é um script amigável que usa o `useradd` por baixo.\n\n**Como usar**\n\n```bash\nsudo adduser [opções] usuário\n```\n\n```bash\nsudo adduser maria\nsudo adduser --shell /bin/zsh --home /srv/joao joao\nsudo adduser --system --no-create-home servico\nsudo adduser --disabled-password ana\n```\n\n**Como se comporta**\n\n- De forma interativa, pergunta: senha, nome completo, telefones e confirmação.\n- Cria o diretório `/home/usuário`, copia os arquivos de `/etc/skel` (`.bashrc`, `.profile`...) e cria um grupo com o mesmo nome do usuário.\n- Define o shell padrão (normalmente `/bin/bash`).\n- Adiciona uma linha em `/etc/passwd`, `/etc/shadow` e `/etc/group`.\n- Se o usuário já existe, avisa e não altera nada.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `--home DIR` | Define o diretório home | `--home /srv/joao` |\n| `--shell SHELL` | Define o shell de login | `--shell /bin/zsh` |\n| `--uid N` | Define o UID | `--uid 1500` |\n| `--gid N` | Define o grupo principal (por número) | `--gid 1500` |\n| `--ingroup GRUPO` | Define o grupo principal (existente) | `--ingroup devs` |\n| `--no-create-home` | Não cria a home | `--no-create-home` |\n| `--disabled-password` | Cria sem senha (login por senha desativado; chave SSH ainda funciona) | |\n| `--disabled-login` | Cria sem senha e sem login possível | |\n| `--system` | Cria usuário de sistema (serviços) | `--system` |\n| `--comment \"texto\"` (`--gecos` em versões antigas) | Preenche nome completo/comentário | `--comment \"Maria Silva\"` |\n| `--group` | Com `--system`, cria um grupo com o mesmo nome | |\n\n---\n\n## `adduser usuario grupo`\n\n**Para que serve:** quando os dois argumentos já existem, o `adduser` **adiciona o usuário a um grupo existente**.\n\n**Como usar**\n\n```bash\nsudo adduser maria sudo        # maria passa a ser administradora\nsudo adduser maria docker      # maria pode usar o docker\n```\n\n```\nAdicionando o usuário `maria' ao grupo `sudo' ...\n```\n\n**Como se comporta**\n\n- Só altera os grupos **secundários** do usuário; o grupo principal não muda.\n- O usuário precisa **sair e entrar de novo** (logout/login) para a mudança valer na sessão.\n- Para conferir: `groups maria` ou `id maria`.\n- Equivalente em qualquer distribuição: `sudo usermod -aG grupo usuário`. O `-a` (append) é essencial; sem ele, o usuário **perde** os outros grupos.\n\n**Opções / formas relacionadas**\n\n| Comando | O que faz |\n|---------|-----------|\n| `adduser usuário grupo` | Adiciona usuário ao grupo |\n| `deluser usuário grupo` | Remove usuário do grupo |\n| `usermod -aG grupo usuário` | Adiciona ao grupo (qualquer distro) |\n| `groups usuário` | Lista os grupos do usuário |\n| `adduser --group grupo` | Cria um novo grupo |\n\n---\n\n## `deluser`\n\n**Para que serve:** remove um usuário (script do Debian/Ubuntu, equivalente amigável ao `userdel`).\n\n**Como usar**\n\n```bash\nsudo deluser [opções] usuário\n```\n\n```bash\nsudo deluser maria                    # remove a conta, mantém a home\nsudo deluser --remove-home maria      # remove a conta e a home\nsudo deluser --backup --remove-home maria\n```\n\n**Como se comporta**\n\n- Por padrão **só remove a conta** (linhas de `/etc/passwd`, `/etc/shadow` e dos grupos). Os arquivos continuam no disco.\n- O grupo com o mesmo nome do usuário é removido se estiver vazio.\n- Não remove usuário com processos em execução.\n- `deluser usuário grupo` remove o usuário do grupo, sem apagar a conta.\n\n**Opções**\n\n| Opção | O que faz |\n|-------|-----------|\n| `--remove-home` | Remove também a home e a caixa de e-mail |\n| `--remove-all-files` | Remove **todos** os arquivos do usuário no sistema |\n| `--backup` | Faz backup dos arquivos removidos (`.tar.gz`) |\n| `--backup-to DIR` | Define onde salvar o backup |\n| `--system` | Só remove se for usuário de sistema |\n| `--group` | Remove um grupo em vez de usuário |\n\n---\n\n## `userdel`\n\n**Para que serve:** remove um usuário. Comando padrão de baixo nível, presente em qualquer distribuição.\n\n**Como usar**\n\n```bash\nsudo userdel [opções] usuário\n```\n\n```bash\nsudo userdel maria        # remove a conta, mantém a home\nsudo userdel -r maria     # remove a conta, a home e o spool de e-mail\n```\n\n**Como se comporta**\n\n- Não pergunta confirmação.\n- Recusa remover se o usuário estiver logado ou tiver processos (a não ser que use `-f`).\n- Sem `-r`, a home e os arquivos ficam como \"órfãos\" (o dono passa a aparecer só como número de UID).\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-r` | Remove também a home e o spool de e-mail | `userdel -r maria` |\n| `-f` | Força, mesmo se logado (perigoso) | `userdel -f maria` |\n\n**`deluser` × `userdel`**\n\n| | `deluser` | `userdel` |\n|--|-----------|-----------|\n| Disponibilidade | Debian/Ubuntu | Todas as distros |\n| Estilo | Script amigável | Comando de baixo nível |\n| Backup dos arquivos | Sim (`--backup`) | Não |\n| Remover home | `--remove-home` | `-r` |\n\n---\n\n## `rm -rf`\n\n**Para que serve:** remove um diretório **e tudo que há dentro**, sem perguntar nada. Aparece aqui porque, depois de `userdel` sem `-r`, é com ele que se limpa a antiga home.\n\n> ⚠️ **O comando mais perigoso desta lista.** Sem lixeira, sem confirmação, sem desfazer. Um espaço no lugar errado ou uma variável vazia pode apagar o que você não queria. Veja a tabela de `rm` em [`03-arquivos.md`](03-arquivos.md#rm).\n\n**Como usar**\n\n```bash\nsudo rm -rf /home/maria_antiga\n```\n\n**Boas práticas**\n\n- Rode antes `ls /home/maria_antiga` para conferir o alvo.\n- Use `rm -ri` (pergunta a cada item) ou `rm -rv` (mostra o que apaga) enquanto estiver aprendendo.\n- Nunca rode `rm -rf` com um caminho que você não conferiu, especialmente com `sudo`.\n- Evite combinar com variáveis que podem estar vazias (`rm -rf $DIR/`).\n\n**Opções**\n\n| Opção | O que faz |\n|-------|-----------|\n| `-r` | Recursivo: entra nos diretórios |\n| `-f` | Força: não pergunta e ignora erros |\n| `-i` | Pergunta antes de apagar cada item |\n| `-v` | Mostra o que foi removido |\n", "05-usuario-dados": "# 05 · Usuário: dados\n\nArquivos do sistema onde ficam as informações de usuários, grupos e permissões de administrador. São **arquivos de configuração**, não comandos.\n\n| Arquivo | Resumo |\n|---------|--------|\n| [`/etc/passwd`](#etcpasswd) | Lista de usuários |\n| [`nano /etc/sudoers`](#nano-etcsudoers) | Quem pode usar `sudo` |\n| [`/bin/bash`](#binbash) | Shell de login padrão |\n| [`cat /etc/group`](#cat-etcgroup) | Lista de grupos |\n\n---\n\n## `/etc/passwd`\n\n**Para que serve:** guarda uma linha por usuário do sistema (contas de pessoas e de serviços).\n\n**Como usar**\n\n```bash\ncat /etc/passwd              # lista tudo\ngrep maria /etc/passwd       # só a linha da maria\ncut -d: -f1 /etc/passwd      # só os nomes de usuário\n```\n\n**Como se comporta**\n\n- Pode ser lido por qualquer usuário.\n- Cada linha tem 7 campos separados por `:`.\n- Apesar do nome, **não guarda mais senhas**: elas ficam em `/etc/shadow`, que só o root lê.\n- Editá-lo à mão é arriscado; prefira `adduser`, `usermod`, `userdel`. Se precisar, use `sudo vipw`.\n\n**Formato**\n\n```\nmaria:x:1001:1001:Maria Silva,,,:/home/maria:/bin/bash\n  1   2  3    4         5            6           7\n```\n\n| # | Campo | Significado |\n|---|-------|-------------|\n| 1 | Nome | Login do usuário |\n| 2 | Senha | `x` = senha em `/etc/shadow` |\n| 3 | UID | ID numérico (0 = root; 1-999 = sistema; 1000+ = pessoas) |\n| 4 | GID | ID do grupo principal |\n| 5 | GECOS | Nome completo e comentários |\n| 6 | Home | Diretório pessoal |\n| 7 | Shell | Programa executado no login (`/usr/sbin/nologin` impede login) |\n\n---\n\n## `nano /etc/sudoers`\n\n**Para que serve:** define **quem pode usar `sudo`** e o que pode executar.\n\n> ⚠️ Um erro de sintaxe neste arquivo pode **bloquear o `sudo` para todos**. A forma segura de editar é `sudo visudo`, que valida a sintaxe antes de salvar. Se você prefere o `nano`, peça ao `visudo` para usá-lo:\n>\n> ```bash\n> sudo EDITOR=nano visudo\n> ```\n\n**Como usar**\n\n```bash\nsudo visudo                    # edita com validação\nsudo nano /etc/sudoers         # funciona, mas sem validação (não recomendado)\n```\n\n**Como se comporta**\n\n- Somente root (ou `sudo`) pode abrir para edição.\n- É lido a cada uso do `sudo`; a mudança vale imediatamente.\n- Em Debian/Ubuntu o grupo `sudo` já está autorizado; por isso basta `adduser usuário sudo`.\n- Arquivos extras podem ficar em `/etc/sudoers.d/` (também edite com `sudo visudo -f`).\n\n**Formato de uma regra**\n\n```\nusuário  host=(executar_como)  comandos\n```\n\n| Exemplo | Significado |\n|---------|-------------|\n| `root ALL=(ALL:ALL) ALL` | root pode tudo |\n| `%sudo ALL=(ALL:ALL) ALL` | membros do grupo `sudo` podem tudo (`%` = grupo) |\n| `maria ALL=(ALL) ALL` | maria pode executar qualquer comando como qualquer usuário |\n| `maria ALL=(ALL) NOPASSWD: ALL` | maria usa `sudo` sem digitar senha (**use com cuidado**) |\n| `joao ALL=(ALL) /usr/bin/apt` | joao só pode rodar `apt` com sudo |\n\n**Opções do `visudo`**\n\n| Opção | O que faz |\n|-------|-----------|\n| `-c` | Só verifica a sintaxe |\n| `-f arquivo` | Edita outro arquivo (ex.: em `/etc/sudoers.d/`) |\n\n---\n\n## `/bin/bash`\n\n**Para que serve:** é o programa **shell** (interpretador de comandos) mais usado no Linux. Aparece no último campo do `/etc/passwd` como o shell de login do usuário.\n\n**Como usar**\n\n```bash\necho $SHELL                  # seu shell de login\ncat /etc/shells              # shells válidos no sistema\nchsh -s /bin/zsh             # troca o seu shell de login\nsudo usermod -s /bin/bash maria   # troca o shell de outro usuário\n/bin/bash                    # abre um novo bash dentro do atual\n```\n\n**Como se comporta**\n\n- Ao fazer login, o sistema executa o programa indicado no campo 7 do `/etc/passwd`.\n- Se o shell for `/usr/sbin/nologin` ou `/bin/false`, o usuário **não consegue** abrir sessão interativa (comum em contas de serviço).\n- Só podem ser usados como login os shells listados em `/etc/shells`.\n- `exit` encerra o shell.\n\n**Shells comuns**\n\n| Shell | Caminho |\n|-------|---------|\n| Bash | `/bin/bash` |\n| Sh (Dash no Debian/Ubuntu) | `/bin/sh` |\n| Zsh | `/usr/bin/zsh` |\n| Fish | `/usr/bin/fish` |\n| Sem login | `/usr/sbin/nologin` |\n\n**Opções comuns do `bash`**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-c \"cmd\"` | Executa um comando e sai | `bash -c \"echo oi\"` |\n| `-x` | Mostra cada comando antes de executar (debug) | `bash -x script.sh` |\n| `-n` | Só verifica a sintaxe, sem executar | `bash -n script.sh` |\n| `--version` | Mostra a versão | `bash --version` |\n\n---\n\n## `cat /etc/group`\n\n**Para que serve:** lista os grupos do sistema e seus membros.\n\n**Como usar**\n\n```bash\ncat /etc/group\ngrep sudo /etc/group      # quem está no grupo sudo\ngroups maria              # grupos de um usuário\nid maria                  # UID, GID e grupos\n```\n\n**Como se comporta**\n\n- Somente leitura para usuários comuns.\n- Cada linha tem 4 campos separados por `:`.\n- Todo usuário tem um **grupo principal** (campo 4 do `/etc/passwd`) que **não** aparece na lista de membros; só os grupos secundários aparecem aqui.\n- Altere por `adduser`, `deluser`, `usermod -aG` ou `gpasswd`, não à mão.\n\n**Formato**\n\n```\nsudo:x:27:maria,joao\n  1  2 3     4\n```\n\n| # | Campo | Significado |\n|---|-------|-------------|\n| 1 | Nome | Nome do grupo |\n| 2 | Senha | Normalmente `x` (senha de grupo em `/etc/gshadow`) |\n| 3 | GID | ID numérico do grupo |\n| 4 | Membros | Lista de usuários separada por vírgula |\n\n**Comandos relacionados**\n\n| Comando | O que faz |\n|---------|-----------|\n| `groups [usuário]` | Lista os grupos |\n| `id [usuário]` | Mostra UID, GID e grupos |\n| `getent group nome` | Consulta um grupo (inclusive de LDAP etc.) |\n| `sudo groupadd nome` | Cria um grupo |\n| `sudo groupdel nome` | Remove um grupo |\n", "06-gerenciamento-de-pacotes": "# 06 · Gerenciamento de pacotes e busca\n\nInstalar/remover programas (Debian/Ubuntu) e encontrar arquivos e comandos no sistema.\n\n> `apt` e `dpkg` são do **Debian, Ubuntu e derivados**. Em outras distros os equivalentes são `dnf`/`rpm` (Fedora), `pacman` (Arch), `zypper` (openSUSE).\n\n| Comando | Resumo |\n|---------|--------|\n| [`apt update`](#apt-update) | Atualiza a lista de pacotes disponíveis |\n| [`apt install`](#apt-install) | Instala software |\n| [`apt remove`](#apt-remove) | Remove software |\n| [`apt search`](#apt-search) | Procura pacotes |\n| [`dpkg -i`](#dpkg--i) | Instala um arquivo `.deb` local |\n| [`find`](#find) | Procura arquivos em tempo real |\n| [`whereis`](#whereis) | Localiza binário, fonte e manual |\n| [`which`](#which) | Mostra o caminho de um comando |\n| [`locate`](#locate) | Procura arquivos via banco de dados |\n| [`updatedb`](#updatedb) | Atualiza o banco do `locate` |\n\n---\n\n## `apt update`\n\n**Para que serve:** baixa a lista atualizada de pacotes e versões dos repositórios. **Não instala nem atualiza nada**, só atualiza o \"catálogo\".\n\n**Como usar**\n\n```bash\nsudo apt update\nsudo apt upgrade        # depois, para de fato atualizar os programas\n```\n\n**Como se comporta**\n\n- Lê os repositórios configurados em `/etc/apt/sources.list` e `/etc/apt/sources.list.d/`.\n- No final informa quantos pacotes podem ser atualizados.\n- Rode sempre antes de `apt install`, para evitar versões antigas ou pacotes \"não encontrados\".\n- Precisa de internet e de `sudo`.\n\n**Opções e comandos relacionados**\n\n| Comando / opção | O que faz |\n|-----------------|-----------|\n| `apt update` | Atualiza a lista de pacotes |\n| `apt upgrade` | Atualiza pacotes instalados (sem remover nenhum) |\n| `apt full-upgrade` | Atualiza e pode remover pacotes se necessário |\n| `apt list --upgradable` | Lista os pacotes com atualização disponível |\n| `-q` | Saída mais silenciosa |\n\n---\n\n## `apt install`\n\n**Para que serve:** instala um ou mais pacotes, resolvendo e baixando as dependências automaticamente.\n\n**Como usar**\n\n```bash\nsudo apt install software\nsudo apt install git curl vim           # vários de uma vez\nsudo apt install -y htop                # sem pedir confirmação\nsudo apt install nginx=1.24.0-1         # versão específica\nsudo apt install ./programa.deb         # arquivo local (com dependências)\n```\n\n**Como se comporta**\n\n- Mostra o que será instalado e pede confirmação `[S/n]`.\n- Instala também as dependências necessárias.\n- Se o pacote já está instalado, atualiza-o se houver versão nova; senão avisa que já está na versão mais recente.\n- Se o nome estiver errado, retorna `E: Impossível encontrar o pacote`.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-y` | Responde \"sim\" a todas as perguntas | `apt install -y git` |\n| `-s`, `--simulate` | Simula, sem instalar | `apt install -s git` |\n| `--no-install-recommends` | Não instala pacotes recomendados | |\n| `--reinstall` | Reinstala o pacote | `apt install --reinstall git` |\n| `--only-upgrade` | Só atualiza se já estiver instalado | |\n| `-f`, `--fix-broken` | Tenta corrigir dependências quebradas | `apt install -f` |\n| `-d`, `--download-only` | Só baixa, sem instalar | |\n\n---\n\n## `apt remove`\n\n**Para que serve:** desinstala um pacote, mantendo seus arquivos de configuração.\n\n**Como usar**\n\n```bash\nsudo apt remove software\nsudo apt purge software          # remove também as configurações\nsudo apt autoremove              # remove dependências que ninguém mais usa\n```\n\n**Como se comporta**\n\n- Remove os programas, mas **mantém** os arquivos de configuração em `/etc` (útil se for reinstalar).\n- Dependências instaladas junto ficam no sistema; use `autoremove` para limpá-las.\n- Mostra o que será removido e pede confirmação.\n\n**Opções e variações**\n\n| Comando / opção | O que faz |\n|-----------------|-----------|\n| `apt remove pacote` | Remove, mantém a configuração |\n| `apt purge pacote` | Remove, **apaga** a configuração |\n| `apt autoremove` | Remove dependências órfãs |\n| `apt autoremove --purge` | Idem, apagando configurações |\n| `-y` | Não pede confirmação |\n| `-s` | Simula sem remover |\n\n---\n\n## `apt search`\n\n**Para que serve:** procura pacotes pelo nome ou pela descrição.\n\n**Como usar**\n\n```bash\napt search software\napt search \"editor de texto\"\napt search --names-only vim       # só nos nomes\napt show vim                      # detalhes de um pacote\napt list --installed              # pacotes instalados\n```\n\n**Como se comporta**\n\n- Pesquisa nos nomes e nas descrições; aceita expressões regulares.\n- Não precisa de `sudo`.\n- Lê o catálogo local; se estiver desatualizado, rode `apt update` antes.\n- Pacotes já instalados aparecem marcados com `[instalado]`.\n\n**Opções e comandos relacionados**\n\n| Comando / opção | O que faz |\n|-----------------|-----------|\n| `apt search termo` | Busca por termo |\n| `--names-only` | Busca só nos nomes |\n| `apt show pacote` | Mostra versão, dependências, tamanho e descrição |\n| `apt list --installed` | Lista os instalados |\n| `apt list --upgradable` | Lista os atualizáveis |\n| `apt policy pacote` | Mostra versão instalada e candidata |\n\n---\n\n## `dpkg -i`\n\n**Para que serve:** instala diretamente um arquivo `.deb` baixado. `dpkg` é a ferramenta de baixo nível; o `apt` é construído em cima dela.\n\n**Como usar**\n\n```bash\nsudo dpkg -i software.deb\nsudo apt install -f              # corrige dependências faltantes\n```\n\n**Como se comporta**\n\n- Instala o pacote **sem baixar dependências**. Se faltarem, o `dpkg` dá erro e deixa o pacote \"meio configurado\"; rode `sudo apt install -f` para resolver.\n- Alternativa mais prática: `sudo apt install ./software.deb`, que já resolve as dependências.\n- Pode ser usado para atualizar o pacote para outra versão.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-i arquivo.deb` | Instala | `dpkg -i x.deb` |\n| `-r pacote` | Remove (mantém configurações) | `dpkg -r x` |\n| `-P pacote` | Remove com configurações (*purge*) | `dpkg -P x` |\n| `-l [padrão]` | Lista pacotes instalados | `dpkg -l \\| grep nginx` |\n| `-L pacote` | Lista os arquivos instalados pelo pacote | `dpkg -L nginx` |\n| `-S arquivo` | Diz a qual pacote um arquivo pertence | `dpkg -S /bin/ls` |\n| `-s pacote` | Mostra o status e as informações | `dpkg -s nginx` |\n| `-I arquivo.deb` | Mostra informações de um `.deb` | `dpkg -I x.deb` |\n| `-c arquivo.deb` | Lista o conteúdo de um `.deb` | `dpkg -c x.deb` |\n| `--configure -a` | Termina configurações pendentes | |\n\n---\n\n## `find`\n\n**Para que serve:** procura arquivos e diretórios **em tempo real**, percorrendo o disco, por nome, tipo, tamanho, data, dono etc.\n\n**Como usar**\n\n```bash\nfind [onde procurar] [critérios] [ação]\n```\n\n```bash\nfind / -name arquivo                  # procura em todo o sistema\nfind ~/projetos -name \"arqu*\"         # nomes que começam com \"arqu\"\nfind . -iname \"*.TXT\"                 # ignora maiúsculas/minúsculas\nfind /var/log -type f -size +10M      # arquivos com mais de 10 MB\nfind / -name arquivo 2>/dev/null      # oculta erros de \"Permissão negada\"\n```\n\n**Como se comporta**\n\n- Percorre recursivamente o diretório indicado e seus subdiretórios.\n- Sem critério, lista tudo.\n- `-name` é **sensível a maiúsculas** e compara o nome inteiro; use curingas (`*`, `?`) para nomes parciais.\n- **Sempre coloque o padrão entre aspas** (`\"arqu*\"`). Sem aspas, o shell expande o `*` com arquivos do diretório atual e pode quebrar a busca.\n- Buscar em `/` pode demorar e gerar muitos erros \"Permissão negada\" se não usar `sudo`.\n- Os critérios são combinados com \"E\" por padrão.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-name padrão` | Nome (sensível a maiúsculas) | `-name \"*.log\"` |\n| `-iname padrão` | Nome (ignora maiúsculas) | `-iname \"*.jpg\"` |\n| `-type f` / `d` / `l` | Arquivo / diretório / link | `-type d` |\n| `-size +10M` | Tamanho (`+` maior, `-` menor; `k`, `M`, `G`) | `-size -1k` |\n| `-mtime -N` | Modificado nos últimos N dias (`+N` = há mais de N dias) | `-mtime -7` |\n| `-user nome` | Pertence ao usuário | `-user maria` |\n| `-perm modo` | Tem as permissões indicadas | `-perm 644` |\n| `-empty` | Arquivos ou diretórios vazios | `-empty` |\n| `-maxdepth N` | Limita a profundidade | `-maxdepth 2` |\n| `-exec cmd {} \\;` | Executa um comando para cada resultado | `-exec ls -l {} \\;` |\n| `-delete` | Apaga os resultados (**cuidado**) | `-name \"*.tmp\" -delete` |\n| `-not`, `!` | Nega um critério | `! -name \"*.txt\"` |\n| `-o` | \"OU\" entre critérios | `-name \"*.c\" -o -name \"*.h\"` |\n\n---\n\n## `whereis`\n\n**Para que serve:** localiza o **binário**, o **código-fonte** e o **manual** de um comando.\n\n**Como usar**\n\n```bash\nwhereis ls\n```\n\n```\nls: /usr/bin/ls /usr/share/man/man1/ls.1.gz\n```\n\n**Como se comporta**\n\n- Procura só em locais padrão do sistema (não percorre o disco inteiro), por isso é rápido.\n- Não encontra arquivos comuns do usuário; serve para comandos e programas.\n- Se nada for encontrado, mostra apenas `nome:`.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-b` | Só binários | `whereis -b ls` |\n| `-m` | Só manuais | `whereis -m ls` |\n| `-s` | Só fontes | `whereis -s ls` |\n| `-u` | Mostra os comandos que não têm uma das entradas | `whereis -m -u *` |\n\n---\n\n## `which`\n\n**Para que serve:** mostra o **caminho do executável** que será rodado quando você digitar um comando.\n\n**Como usar**\n\n```bash\nwhich python3\n# /usr/bin/python3\nwhich -a python3     # todas as ocorrências no PATH\n```\n\n**Como se comporta**\n\n- Procura nos diretórios listados em `$PATH`, na ordem, e mostra o primeiro encontrado.\n- Não mostra nada se o comando não existir (retorna código de saída 1).\n- Não enxerga comandos internos do shell (`cd`, `echo`) nem aliases; para isso use `type comando`.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-a` | Mostra todas as ocorrências no `PATH` | `which -a python3` |\n| `--version` | Mostra a versão | `which --version` |\n| *(alternativa)* `type -a cmd` | Mostra aliases, builtins e arquivos | `type -a ls` |\n| *(dica)* `echo $PATH` | Mostra os diretórios pesquisados | |\n\n---\n\n## `locate`\n\n**Para que serve:** procura arquivos pelo nome de forma **muito rápida**, consultando um banco de dados pré-indexado.\n\n**Como usar**\n\n```bash\nlocate nome\nlocate -i \"relatorio\"          # ignora maiúsculas\nlocate -c \"*.conf\"             # só conta os resultados\nlocate -n 10 \".bashrc\"         # limita a 10 resultados\n```\n\n**Como se comporta**\n\n- Não percorre o disco: consulta o banco gerado pelo `updatedb`. Por isso é muito mais rápido que o `find`.\n- O banco pode estar **desatualizado**: arquivos recém-criados não aparecem e arquivos apagados podem aparecer. Rode `sudo updatedb` para atualizar.\n- Procura o texto em qualquer parte do **caminho completo**.\n- Pode não vir instalado: `sudo apt install plocate` (ou `mlocate`).\n- Mostra só o que você teria permissão para ver.\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-i` | Ignora maiúsculas/minúsculas | `locate -i foto` |\n| `-c` | Só mostra a quantidade | `locate -c .log` |\n| `-n N` | Limita a N resultados | `locate -n 5 foto` |\n| `-b` | Compara só com o nome do arquivo (não o caminho todo) | `locate -b nome` |\n| `-r regex` | Usa expressão regular | `locate -r '\\.conf$'` |\n| `-e` | Só mostra arquivos que ainda existem | `locate -e nome` |\n| `-S` | Estatísticas do banco | `locate -S` |\n\n---\n\n## `updatedb`\n\n**Para que serve:** atualiza o banco de dados usado pelo `locate`.\n\n**Como usar**\n\n```bash\nsudo updatedb\n```\n\n**Como se comporta**\n\n- Percorre o sistema de arquivos e reconstrói o índice. Pode levar de segundos a minutos.\n- Normalmente roda sozinho uma vez por dia (cron/timer), então só precisa chamar manualmente após criar/apagar arquivos e querer achá-los logo com `locate`.\n- Configuração em `/etc/updatedb.conf`, onde se define o que **não** indexar (ex.: `/tmp`, `/proc`, sistemas de rede).\n- Rodar sem `sudo` só indexa o que o seu usuário consegue ler.\n\n**Opções** (variam um pouco entre `mlocate` e `plocate`; confira com `man updatedb`)\n\n| Opção | O que faz |\n|-------|-----------|\n| `-v` | Mostra os arquivos conforme são indexados |\n| `-U DIR` | Indexa apenas a partir de DIR |\n| `-o ARQUIVO` | Grava o banco em outro arquivo |\n| `-e DIRS` | Diretórios a excluir da indexação |\n| `-l 0/1` | Controla a verificação de permissões na consulta |\n", "07-permissoes": "# 07 · Permissões\n\nQuem pode ler, escrever e executar cada arquivo.\n\n| Comando | Resumo |\n|---------|--------|\n| [`chmod o+w`](#chmod-ow) | Altera permissões usando letras (modo simbólico) |\n| [`chmod 740`](#chmod-740) | Altera permissões usando números (modo octal) |\n| [`chown`](#chown) | Altera dono e grupo |\n\n---\n\n## Entendendo as permissões\n\nO `ls -l` mostra as permissões de cada arquivo:\n\n```\n-rwxr-xr-- 1 maria devs 4096 out 10 09:30 script.sh\n```\n\nOs 10 primeiros caracteres se dividem assim:\n\n```\n-   rwx   r-x   r--\n│    │     │     │\n│    │     │     └─ outros (o): leitura\n│    │     └─ grupo (g): leitura e execução\n│    └─ dono (u): leitura, escrita e execução\n└─ tipo: - arquivo, d diretório, l link\n```\n\n| Permissão | Letra | Valor | Em arquivo | Em diretório |\n|-----------|-------|-------|------------|--------------|\n| Leitura | `r` | 4 | Ler o conteúdo | Listar o conteúdo (`ls`) |\n| Escrita | `w` | 2 | Alterar o conteúdo | Criar/apagar/renomear itens dentro |\n| Execução | `x` | 1 | Executar como programa | Entrar (`cd`) e acessar itens |\n| Nenhuma | `-` | 0 | | |\n\nA soma dos valores forma um dígito: `rwx` = 4+2+1 = **7**, `r-x` = 4+0+1 = **5**, `r--` = **4**, `---` = **0**.\n\n| Octal | Permissão | Octal | Permissão |\n|-------|-----------|-------|-----------|\n| 0 | `---` | 4 | `r--` |\n| 1 | `--x` | 5 | `r-x` |\n| 2 | `-w-` | 6 | `rw-` |\n| 3 | `-wx` | 7 | `rwx` |\n\n---\n\n## `chmod o+w`\n\n**Para que serve:** altera permissões no **modo simbólico**: você diz *para quem*, *se adiciona ou remove* e *qual permissão*. `chmod` vem de *change mode*.\n\n`o+w` = **o**utros + dar permissão de **w**rite (escrita).\n\n**Como usar**\n\n```bash\nchmod [opções] modo arquivo...\n```\n\n```bash\nchmod o+w arquivo.txt        # outros ganham escrita\nchmod u+x script.sh          # dono ganha execução\nchmod g-w arquivo.txt        # grupo perde escrita\nchmod a+r arquivo.txt        # todos ganham leitura\nchmod u=rwx,g=rx,o=r f.sh    # define tudo de uma vez\nchmod -R g+w pasta           # recursivo\n```\n\n**Como se comporta**\n\n- Só o **dono** do arquivo (ou o root) pode mudar suas permissões.\n- `+` e `-` alteram **apenas** o que foi indicado e mantêm o resto; `=` define exatamente aquelas permissões e remove as demais.\n- Dar `o+w` deixa **qualquer usuário do sistema** alterar o arquivo. Isso raramente é uma boa ideia (principalmente em scripts e arquivos de configuração).\n- Em diretórios, `x` é necessário para entrar neles.\n\n**Sintaxe: `[quem][operador][permissões]`**\n\n| Parte | Valores | Significado |\n|-------|---------|-------------|\n| Quem | `u` | Dono (*user*) |\n| | `g` | Grupo |\n| | `o` | Outros (*others*) |\n| | `a` | Todos (*all*) = `ugo` (padrão se omitido) |\n| Operador | `+` | Adiciona |\n| | `-` | Remove |\n| | `=` | Define exatamente |\n| Permissão | `r` `w` `x` | Leitura, escrita, execução |\n| | `X` | Execução só se for diretório ou já tiver `x` em alguém |\n| | `s` | setuid/setgid |\n| | `t` | *sticky bit* |\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-R` | Recursivo: aplica em diretórios e conteúdo | `chmod -R u+rwX pasta` |\n| `-v` | Mostra todos os arquivos processados | `chmod -v o-w x` |\n| `-c` | Mostra só os que mudaram | `chmod -c o-w x` |\n| `-f` | Silencia mensagens de erro | `chmod -f o-w x` |\n| `--reference=ref` | Copia as permissões de outro arquivo | `chmod --reference=a b` |\n\n---\n\n## `chmod 740`\n\n**Para que serve:** altera permissões no **modo octal (numérico)**: três dígitos, um para dono, um para grupo e um para outros.\n\n**Como usar**\n\n```bash\nchmod 740 arquivo.txt\n```\n\n**Como se comporta**\n\n`740` é lido dígito a dígito:\n\n| Dígito | Quem | Cálculo | Permissão |\n|--------|------|---------|-----------|\n| 7 | Dono (u) | 4+2+1 | `rwx`: ler, escrever, executar |\n| 4 | Grupo (g) | 4 | `r--`: só ler |\n| 0 | Outros (o) | 0 | `---`: nada |\n\nResultado no `ls -l`: `-rwxr-----`\n\n- Ao contrário do modo simbólico, o octal **substitui todas** as permissões de uma vez.\n- Dá para escrever com 4 dígitos para incluir bits especiais (`chmod 1777 /tmp`).\n\n**Valores comuns**\n\n| Modo | Símbolos | Uso típico |\n|------|----------|------------|\n| `600` | `rw-------` | Arquivos privados (chaves SSH) |\n| `644` | `rw-r--r--` | Arquivos comuns |\n| `640` | `rw-r-----` | Dono edita, grupo lê, outros nada |\n| `700` | `rwx------` | Diretório/script só do dono |\n| `740` | `rwx r-- ---` | Dono total, grupo lê |\n| `750` | `rwxr-x---` | Dono total, grupo lê e executa |\n| `755` | `rwxr-xr-x` | Programas e diretórios públicos |\n| `777` | `rwxrwxrwx` | Todos podem tudo (**evite**) |\n\n**Bits especiais (1º dígito, opcional)**\n\n| Valor | Nome | Efeito |\n|-------|------|--------|\n| 4 | setuid | Executa com os privilégios do **dono** do arquivo |\n| 2 | setgid | Executa com os do grupo; em diretório, novos arquivos herdam o grupo |\n| 1 | sticky | Em diretório, só o dono do arquivo pode apagá-lo (ex.: `/tmp`) |\n\n**Opções:** as mesmas do `chmod` (veja a tabela em [`chmod o+w`](#chmod-ow)).\n\n---\n\n## `chown`\n\n**Para que serve:** altera o **dono** e/ou o **grupo** de arquivos e diretórios. Significa *change owner*.\n\n**Como usar**\n\n```bash\nsudo chown [opções] dono[:grupo] arquivo...\n```\n\n```bash\nsudo chown maria arquivo.txt             # novo dono\nsudo chown maria:devs arquivo.txt        # novo dono e novo grupo\nsudo chown :devs arquivo.txt             # só o grupo\nsudo chown -R maria:maria /home/maria    # recursivo\n```\n\n**Como se comporta**\n\n- Normalmente só o **root** pode mudar o dono (use `sudo`). O dono comum pode, no máximo, trocar o grupo para um grupo do qual faça parte (com `chgrp`).\n- Aceita nome ou número (UID/GID).\n- Alterar dono não muda as permissões, só a quem as regras de \"dono\" se aplicam.\n- Com `-R` em diretório, afeta tudo dentro. Cuidado com o caminho para não alterar o sistema todo.\n- Por padrão não segue links simbólicos recursivamente; use `-h` para alterar o próprio link.\n\n**Formas de usar o `dono:grupo`**\n\n| Forma | Efeito |\n|-------|--------|\n| `chown maria arq` | Só o dono |\n| `chown maria:devs arq` | Dono e grupo |\n| `chown maria: arq` | Dono e grupo = grupo de login da maria |\n| `chown :devs arq` | Só o grupo |\n\n**Opções**\n\n| Opção | O que faz | Exemplo |\n|-------|-----------|---------|\n| `-R` | Recursivo | `chown -R maria pasta` |\n| `-v` | Mostra todos os arquivos processados | `chown -v maria x` |\n| `-c` | Mostra só os que mudaram | `chown -c maria x` |\n| `-h` | Altera o link simbólico em vez do alvo | `chown -h maria link` |\n| `--from=dono:grupo` | Só altera se o dono/grupo atual forem esses | `chown --from=joao maria x` |\n| `--reference=ref` | Copia dono e grupo de outro arquivo | `chown --reference=a b` |\n\n**Comandos relacionados**\n\n| Comando | O que faz |\n|---------|-----------|\n| `chgrp grupo arq` | Altera só o grupo |\n| `umask` | Define as permissões padrão dos novos arquivos |\n| `ls -l` | Mostra dono, grupo e permissões |\n| `stat arq` | Mostra permissões em octal e simbólico |\n", "08-redes": "# 08 · Redes\n\nComandos para ver, testar e diagnosticar redes, DNS, portas e conexões remotas.\n\n> Use ferramentas de varredura e captura (`nmap`, `tcpdump`, `nc`) **somente em redes e equipamentos seus ou com autorização por escrito**. Fora disso pode ser crime.\n\n## Conceitos rápidos\n\n- **IP**: endereço de um dispositivo (ex.: `192.168.0.10`). **Máscara/CIDR**: define o tamanho da rede (`/24` = 254 dispositivos).\n- **Gateway**: o roteador que leva seus pacotes para fora da rede. **DNS**: traduz nomes (`google.com`) em IPs.\n- **Porta**: \"porta de entrada\" de um serviço no dispositivo (0 a 65535). **TCP** confirma a entrega; **UDP** não.\n\n## Portas comuns\n\n| Porta | Serviço | Porta | Serviço |\n|-------|---------|-------|---------|\n| 20/21 | FTP | 110 / 143 | POP3 / IMAP |\n| 22 | SSH | 443 | HTTPS |\n| 23 | Telnet (inseguro) | 3306 | MySQL |\n| 25 | SMTP (e-mail) | 5432 | PostgreSQL |\n| 53 | DNS | 3389 | Área de trabalho remota (RDP) |\n| 80 | HTTP | 8080 | HTTP alternativo |\n\n## `ip`\n\n**Para que serve:** mostra e configura interfaces, endereços IP, rotas e vizinhos. Substitui `ifconfig`, `route` e `arp`.\n\n```bash\nip addr                      # endereços de cada interface\nip -br a                     # versão resumida\nip route                     # rotas e gateway padrão\nip neigh                     # tabela ARP (vizinhos na rede local)\nsudo ip link set eth0 down   # desliga a interface\n```\n\n**Opções:** `addr` endereços · `link` interfaces · `route` rotas · `neigh` vizinhos · `-br` resumido · `-c` colorido\n\n## `ifconfig`\n\n**Para que serve:** versão antiga do `ip addr`: mostra e configura interfaces. Vem no pacote `net-tools`.\n\n```bash\nifconfig                 # todas as interfaces\nifconfig eth0 up         # liga a interface\n```\n\n## `ping`\n\n**Para que serve:** testa se outro dispositivo responde e mede o tempo de resposta (latência). Envia pacotes ICMP.\n\n```bash\nping google.com          # continua até Ctrl+C\nping -c 4 8.8.8.8        # envia só 4 pacotes\nping -i 0.5 host         # um pacote a cada 0,5 s\n```\n\n**Opções:** `-c N` quantidade · `-i s` intervalo · `-s bytes` tamanho · `-t N` TTL · `-4` / `-6` força IPv4/IPv6\n\n**Dica:** se `ping 8.8.8.8` funciona e `ping google.com` não, o problema é o DNS.\n\n## `traceroute`\n\n**Para que serve:** mostra por quais roteadores (saltos) seus pacotes passam até o destino. Ajuda a achar onde a rede trava.\n\n```bash\ntraceroute google.com\ntraceroute -n google.com     # sem resolver nomes (mais rápido)\ntracepath google.com         # alternativa que não exige root\n```\n\n**Opções:** `-n` só IPs · `-m N` máximo de saltos · `-I` usa ICMP · `-T` usa TCP\n\n## `mtr`\n\n**Para que serve:** junta `ping` e `traceroute` em tempo real, mostrando perda de pacotes por salto.\n\n```bash\nmtr google.com\nmtr -rwc 10 google.com       # relatório de 10 envios\n```\n\n## `ss`\n\n**Para que serve:** lista conexões e portas abertas. Substitui o `netstat`.\n\n```bash\nss -tulpn                    # portas em escuta (TCP/UDP) e programas\nss -t state established      # conexões TCP ativas\nss -s                        # resumo\n```\n\n**Opções:** `-t` TCP · `-u` UDP · `-l` em escuta · `-p` mostra o processo · `-n` números em vez de nomes · `-a` todas\n\n## `netstat`\n\n**Para que serve:** versão antiga do `ss` (pacote `net-tools`).\n\n```bash\nnetstat -tulpn               # portas em escuta\nnetstat -rn                  # tabela de rotas\n```\n\n## `curl`\n\n**Para que serve:** faz requisições a servidores (HTTP, HTTPS, FTP...) e mostra a resposta. Muito usado para testar APIs.\n\n```bash\ncurl https://example.com                 # mostra o conteúdo\ncurl -I https://example.com              # só os cabeçalhos\ncurl -o pagina.html https://example.com # salva em arquivo\ncurl -X POST -d \"a=1\" https://httpbin.org/post\ncurl ifconfig.me                         # seu IP público\n```\n\n**Opções:** `-I` cabeçalhos · `-o arq` salva · `-O` salva com o nome original · `-L` segue redirecionamentos · `-s` silencioso · `-v` detalhado · `-X` método · `-d` dados · `-H` cabeçalho · `-u user:senha` autenticação\n\n## `wget`\n\n**Para que serve:** baixa arquivos da internet, com suporte a retomar download.\n\n```bash\nwget https://site.com/arquivo.zip\nwget -c https://site.com/grande.iso      # retoma download interrompido\nwget -r -np https://site.com/pasta/      # baixa uma pasta inteira\n```\n\n**Opções:** `-c` retoma · `-O nome` define o nome · `-r` recursivo · `-np` não sobe de pasta · `-q` silencioso · `-b` em segundo plano\n\n## `dig`\n\n**Para que serve:** consulta servidores DNS em detalhes. Ferramenta principal para diagnosticar DNS.\n\n```bash\ndig google.com                # registro A (IPv4)\ndig google.com MX             # servidores de e-mail\ndig +short google.com         # só a resposta\ndig @8.8.8.8 google.com       # pergunta a um DNS específico\ndig -x 8.8.8.8                # consulta reversa (IP para nome)\n```\n\n**Tipos de registro:** `A` IPv4 · `AAAA` IPv6 · `MX` e-mail · `NS` servidores de nomes · `TXT` texto · `CNAME` apelido\n\n## `nslookup` e `host`\n\n**Para que serve:** consultas DNS mais simples que o `dig`.\n\n```bash\nnslookup google.com\nnslookup google.com 8.8.8.8   # usando outro servidor DNS\nhost google.com\nhost 8.8.8.8\n```\n\n## `whois`\n\n**Para que serve:** mostra quem registrou um domínio ou IP, datas e contatos técnicos.\n\n```bash\nwhois exemplo.com.br\nwhois 8.8.8.8\n```\n\n## `hostname`\n\n**Para que serve:** mostra ou altera o nome da máquina na rede.\n\n```bash\nhostname                     # nome atual\nhostname -I                  # IPs da máquina\nsudo hostnamectl set-hostname meu-pc\n```\n\n## `ssh`\n\n**Para que serve:** acessa outro computador pelo terminal, com conexão criptografada.\n\n```bash\nssh maria@192.168.0.20\nssh -p 2222 maria@servidor.com           # porta diferente\nssh -i ~/.ssh/chave maria@servidor.com   # com chave privada\nssh-keygen -t ed25519                    # cria um par de chaves\nssh-copy-id maria@servidor.com           # envia sua chave pública\n```\n\n**Opções:** `-p` porta · `-i` chave · `-L` túnel local · `-v` depuração · `-X` janelas gráficas\n\n## `scp`\n\n**Para que serve:** copia arquivos entre máquinas usando SSH.\n\n```bash\nscp arquivo.txt maria@servidor:/home/maria/    # envia\nscp maria@servidor:/var/log/syslog .           # baixa\nscp -r pasta maria@servidor:/tmp/              # pasta inteira\n```\n\n**Opções:** `-r` pastas · `-P` porta (maiúsculo) · `-i` chave\n\n## `rsync`\n\n**Para que serve:** sincroniza pastas, copiando só o que mudou. Local ou por SSH.\n\n```bash\nrsync -avh origem/ destino/\nrsync -avz pasta/ maria@servidor:/backup/\nrsync -av --delete origem/ destino/      # espelha (apaga o que sumiu)\n```\n\n**Opções:** `-a` preserva tudo · `-v` detalhado · `-z` comprime · `-h` legível · `-n` simula · `--delete` espelha\n\n## `nc` (netcat)\n\n**Para que serve:** abre conexões TCP/UDP cruas. Útil para testar se uma porta responde.\n\n```bash\nnc -zv servidor.com 443          # testa a porta 443\nnc -l 9000                       # escuta na porta 9000\n```\n\n**Opções:** `-z` só testa · `-v` detalhado · `-l` escuta · `-u` UDP\n\n## `nmap`\n\n**Para que serve:** descobre dispositivos e portas abertas numa rede. Usado em auditoria e inventário de redes **próprias**.\n\n```bash\nnmap 192.168.0.1                 # portas mais comuns de um host\nnmap -sn 192.168.0.0/24          # quais dispositivos estão ligados\nnmap -sV 192.168.0.1             # descobre versões dos serviços\n```\n\n**Opções:** `-sn` só descoberta · `-p` portas · `-sV` versões · `-O` sistema operacional · `-A` completo\n\n## `tcpdump`\n\n**Para que serve:** captura e mostra pacotes que passam pela interface. Exige `sudo`; use só em redes autorizadas.\n\n```bash\nsudo tcpdump -i eth0 -c 10           # 10 pacotes\nsudo tcpdump -i any port 53          # só tráfego DNS\nsudo tcpdump -w captura.pcap         # salva para abrir no Wireshark\n```\n\n**Opções:** `-i` interface · `-c N` quantidade · `-n` sem resolver nomes · `-w` grava · `-r` lê arquivo\n\n## `ufw`\n\n**Para que serve:** firewall simples do Ubuntu. Controla quais portas aceitam conexões.\n\n```bash\nsudo ufw status verbose\nsudo ufw allow 22/tcp            # libera SSH\nsudo ufw deny 23                 # bloqueia Telnet\nsudo ufw enable                  # liga o firewall\n```\n\n> Antes de ativar por SSH, libere a porta 22. Senão você se tranca fora.\n\n## `iptables`\n\n**Para que serve:** firewall de baixo nível do kernel (regras em cadeias `INPUT`, `OUTPUT`, `FORWARD`).\n\n```bash\nsudo iptables -L -n -v                          # lista regras\nsudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT\nsudo iptables -A INPUT -s 10.0.0.5 -j DROP      # bloqueia um IP\n```\n\n**Opções:** `-L` lista · `-A` acrescenta · `-D` remove · `-p` protocolo · `--dport` porta · `-s` origem · `-j` ação (`ACCEPT`, `DROP`)\n\n## `nmcli`\n\n**Para que serve:** controla o NetworkManager (Wi-Fi e conexões) pelo terminal.\n\n```bash\nnmcli device status\nnmcli device wifi list\nnmcli device wifi connect \"MinhaRede\" password \"senha\"\n```\n\n## `resolvectl`\n\n**Para que serve:** mostra e testa a configuração de DNS (systemd-resolved).\n\n```bash\nresolvectl status                # servidores DNS em uso\nresolvectl query google.com\n```\n\n## `arp`\n\n**Para que serve:** mostra a relação entre IPs e endereços MAC na rede local.\n\n```bash\narp -a                           # ou: ip neigh\n```\n", "09-mais-comandos": "# 09 · Mais comandos essenciais\n\nComandos do dia a dia que completam o básico: mover arquivos, buscar texto, processos, disco, compactação e serviços.\n\n## `mv`\n\n**Para que serve:** move ou renomeia arquivos e pastas.\n\n```bash\nmv antigo.txt novo.txt           # renomeia\nmv arquivo.txt ~/documentos/     # move\nmv -i a.txt b.txt                # pergunta antes de sobrescrever\n```\n\n**Opções:** `-i` pergunta · `-n` não sobrescreve · `-v` mostra o que fez · `-u` só se for mais novo\n\n## `ln`\n\n**Para que serve:** cria atalhos (links) para arquivos.\n\n```bash\nln -s /caminho/original atalho   # link simbólico (aponta pelo caminho)\nln original copia-dura           # link físico (mesmo conteúdo no disco)\n```\n\n## `less`\n\n**Para que serve:** lê arquivos longos página por página. Teclas: `Espaço` avança, `b` volta, `/texto` busca, `q` sai.\n\n```bash\nless /var/log/syslog\ncomando-longo | less\n```\n\n## `grep`\n\n**Para que serve:** procura texto dentro de arquivos ou da saída de outros comandos.\n\n```bash\ngrep erro log.txt\ngrep -i \"erro\" log.txt           # ignora maiúsculas\ngrep -rn \"senha\" ~/projeto       # busca em pastas, com número da linha\nps aux | grep firefox\n```\n\n**Opções:** `-i` ignora maiúsculas · `-r` recursivo · `-n` número da linha · `-v` inverte (linhas sem o texto) · `-c` conta · `-w` palavra inteira · `-E` expressão regular\n\n## `sort`, `uniq` e `wc`\n\n**Para que serve:** ordenar, remover repetidos e contar.\n\n```bash\nsort nomes.txt                   # ordem alfabética\nsort -n numeros.txt              # ordem numérica\nsort arq | uniq -c               # conta repetições\nwc -l arquivo.txt                # número de linhas\n```\n\n**Opções:** `sort -r` inverte · `uniq -d` só repetidos · `wc -w` palavras · `wc -c` bytes\n\n## `cut`\n\n**Para que serve:** extrai colunas de um texto.\n\n```bash\ncut -d: -f1 /etc/passwd          # 1º campo, separado por \":\"\ncut -c1-10 arquivo.txt           # 10 primeiros caracteres\n```\n\n## `diff`\n\n**Para que serve:** mostra as diferenças entre dois arquivos.\n\n```bash\ndiff a.txt b.txt\ndiff -u a.txt b.txt              # formato unificado (como no Git)\n```\n\n## `tar`\n\n**Para que serve:** junta arquivos em um só (`.tar`) e, com compressão, gera `.tar.gz`.\n\n```bash\ntar -czvf backup.tar.gz pasta/   # cria e comprime\ntar -xzvf backup.tar.gz          # extrai\ntar -tf backup.tar.gz            # lista o conteúdo\ntar -xzvf backup.tar.gz -C /tmp  # extrai em outra pasta\n```\n\n**Opções:** `-c` cria · `-x` extrai · `-t` lista · `-z` gzip · `-v` detalhado · `-f arq` nome do arquivo · `-C` pasta de destino\n\n## `gzip`, `zip` e `unzip`\n\n**Para que serve:** compactar e descompactar.\n\n```bash\ngzip arquivo.txt                 # gera arquivo.txt.gz (apaga o original)\ngunzip arquivo.txt.gz\nzip -r pasta.zip pasta/\nunzip pasta.zip -d destino/\n```\n\n## `df` e `du`\n\n**Para que serve:** ver o espaço em disco. `df` mostra por partição; `du` mostra por pasta.\n\n```bash\ndf -h                            # espaço livre das partições\ndu -sh pasta/                    # tamanho total de uma pasta\ndu -h --max-depth=1 ~ | sort -h  # quem ocupa mais espaço\n```\n\n**Opções:** `-h` legível · `-s` só o total · `--max-depth=N` profundidade\n\n## `free`\n\n**Para que serve:** mostra o uso de memória RAM e swap.\n\n```bash\nfree -h\n```\n\n## `ps`\n\n**Para que serve:** lista os processos em execução.\n\n```bash\nps aux                           # todos os processos\nps -ef | grep nginx\nps -u maria                      # processos de um usuário\n```\n\n## `top` e `htop`\n\n**Para que serve:** monitoram processos, CPU e memória em tempo real. `q` sai. O `htop` é mais amigável (`sudo apt install htop`).\n\n```bash\ntop\nhtop\n```\n\n## `kill` e `killall`\n\n**Para que serve:** encerra processos pelo número (PID) ou pelo nome.\n\n```bash\nkill 1234                        # pede para encerrar (SIGTERM)\nkill -9 1234                     # força o fim (SIGKILL), último recurso\nkillall firefox                  # pelo nome\n```\n\n## `systemctl`\n\n**Para que serve:** controla serviços do sistema (systemd).\n\n```bash\nsystemctl status ssh\nsudo systemctl start ssh\nsudo systemctl stop ssh\nsudo systemctl restart ssh\nsudo systemctl enable ssh        # inicia junto com o sistema\n```\n\n## `journalctl`\n\n**Para que serve:** lê os logs do sistema.\n\n```bash\njournalctl -xe                   # últimos eventos, com detalhes\njournalctl -u ssh                # logs de um serviço\njournalctl -f                    # acompanha em tempo real\n```\n\n## `history`\n\n**Para que serve:** lista os comandos que você já digitou.\n\n```bash\nhistory | tail -20\n!!                               # repete o último comando\n!45                              # repete o comando nº 45\n```\n\n## `alias`\n\n**Para que serve:** cria apelidos para comandos longos. Para valer sempre, coloque no `~/.bashrc`.\n\n```bash\nalias ll='ls -lah'\nalias atualizar='sudo apt update && sudo apt upgrade'\nunalias ll\n```\n\n## `date` e `uname`\n\n**Para que serve:** mostrar a data/hora e informações do sistema.\n\n```bash\ndate                             # data e hora atuais\ndate +%d/%m/%Y                   # formato personalizado\nuname -a                         # kernel e arquitetura\ncat /etc/os-release              # qual distribuição\nuptime                           # há quanto tempo está ligado\n```\n\n## `crontab`\n\n**Para que serve:** agenda comandos para rodarem sozinhos.\n\n```bash\ncrontab -e                       # edita suas tarefas\ncrontab -l                       # lista\n# minuto hora dia mês dia-da-semana comando\n30 2 * * * /home/maria/backup.sh # todo dia às 02:30\n```\n\n## `export` e `env`\n\n**Para que serve:** definir e consultar variáveis de ambiente.\n\n```bash\nexport EDITOR=nano\necho $PATH\nenv                              # lista todas as variáveis\n```\n\n## `tree` e `clear`\n\n**Para que serve:** `tree` mostra pastas em forma de árvore (`sudo apt install tree`); `clear` limpa a tela (ou `Ctrl+L`).\n\n```bash\ntree -L 2                        # 2 níveis de profundidade\n```\n"};</script>
+<script>const CAPS = [
+  ["01-navegacao", "Navegação"],
+  ["02-ajuda", "Ajuda"],
+  ["03-arquivos", "Arquivos"],
+  ["04-gerenciamento-de-usuarios", "Gerenciamento de usuários"],
+  ["05-usuario-dados", "Dados de usuário"],
+  ["06-gerenciamento-de-pacotes", "Pacotes e busca"],
+  ["07-permissoes", "Permissões"],
+  ["08-redes", "Redes"],
+  ["09-mais-comandos", "Mais comandos"],
+];
+const $ = (s) => document.querySelector(s);
+const content = $("#content");
+const cache = {};
+let atual = null;
+let indice = null;
+
+const slug = (t) => t.toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu, "").trim().replace(/\s/g, "-");
+const igual = (a, b) => a.replace(/^-+/, "") === b.replace(/^-+/, "");
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+async function carregar(id) {
+  return DOCS[id] || "# Capítulo não encontrado";
+}
+
+function menu() {
+  $("#side").innerHTML = '<a href="#inicio" data-id="inicio">Início</a>' + CAPS.map(
+    ([id, t]) => `<a href="#${id}" data-id="${id}">${esc(t)}</a>`
+  ).join("");
+}
+
+function copiar(pre) {
+  const b = document.createElement("button");
+  b.className = "copy";
+  b.textContent = "Copiar";
+  b.onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(pre.querySelector("code").innerText);
+      b.textContent = "Copiado";
+    } catch (e) {
+      b.textContent = "Erro ao copiar";
+    }
+    setTimeout(() => (b.textContent = "Copiar"), 1500);
+  };
+  pre.append(b);
+}
+
+function ajustarLinks(id) {
+  content.querySelectorAll("a[href]").forEach((a) => {
+    const h = a.getAttribute("href");
+    if (/^https?:/.test(h)) {
+      a.target = "_blank";
+      a.rel = "noopener";
+    } else if (h.startsWith("#")) {
+      a.href = `#${id}/${h.slice(1)}`;
+    } else if (h.includes(".md")) {
+      const [arq, ancora] = h.split("#");
+      a.href = `#${arq.replace(/^.*\//, "").replace(".md", "")}${ancora ? "/" + ancora : ""}`;
+    }
+  });
+}
+
+async function mostrar(id) {
+  content.innerHTML = marked.parse(await carregar(id));
+  content.querySelectorAll("h2").forEach((h) => (h.id = slug(h.textContent)));
+  content.querySelectorAll("pre").forEach(copiar);
+  content.querySelectorAll("table").forEach((t) => {
+    const d = document.createElement("div");
+    d.className = "scroll";
+    t.replaceWith(d);
+    d.append(t);
+  });
+  ajustarLinks(id);
+  document.querySelectorAll("#side a").forEach((a) => {
+    a.toggleAttribute("aria-current", a.dataset.id === id);
+  });
+  const i = CAPS.findIndex((c) => c[0] === id);
+  const ant = CAPS[i - 1], prox = CAPS[i + 1];
+  $("#pager").innerHTML =
+    (ant ? `<a href="#${ant[0]}"><small>Anterior</small>${esc(ant[1])}</a>` : "") +
+    (prox ? `<a href="#${prox[0]}"><small>Próximo</small>${esc(prox[1])}</a>` : "");
+  document.title = `${CAPS[i][1]} · Linux Terminal`;
+  atual = id;
+}
+
+async function inicio() {
+  const idx = await montarIndice();
+  const cards = CAPS.map(([id, t]) => {
+    const cs = idx.filter((x) => x.id === id && x.resumo);
+    return `<a class="card" href="#${id}"><b>${esc(t)}</b><small>${cs.length} tópicos</small><span>${cs.slice(0, 7).map((x) => `<code>${esc(x.nome)}</code>`).join(" ")}</span></a>`;
+  }).join("");
+  content.innerHTML = `<h1>Linux Terminal</h1><p>Guia em português dos comandos do terminal Linux, da navegação às redes. Escolha um capítulo ou busque um comando.</p><div class="cards">${cards}</div>`;
+  document.querySelectorAll("#side a").forEach((a) => a.toggleAttribute("aria-current", a.dataset.id === "inicio"));
+  $("#pager").innerHTML = "";
+  document.title = "Linux Terminal · guia de comandos em português";
+  atual = "inicio";
+}
+
+async function rota() {
+  const [id0, ancora] = decodeURIComponent(location.hash.slice(1)).split("/");
+  const id = CAPS.some((c) => c[0] === id0) ? id0 : "inicio";
+  if (id !== atual) await (id === "inicio" ? inicio() : mostrar(id));
+  const alvo = ancora && [...content.querySelectorAll("h2")].find((h) => igual(h.id, ancora));
+  alvo ? alvo.scrollIntoView() : window.scrollTo(0, 0);
+  document.body.classList.remove("nav-open");
+}
+
+async function montarIndice() {
+  if (indice) return indice;
+  indice = [];
+  for (const [id, titulo] of CAPS) {
+    const md = await carregar(id);
+    md.split(/\n(?=## )/).slice(1).forEach((sec) => {
+      const nome = sec.match(/^## (.+)/)[1].replace(/`/g, "");
+      const resumo = (sec.match(/\*\*Para que serve:\*\*\s*(.+)/) || ["", ""])[1].replace(/[`*]/g, "");
+      indice.push({ id, titulo, nome, resumo, ancora: slug(nome), texto: (nome + " " + sec).toLowerCase() });
+    });
+  }
+  return indice;
+}
+
+async function buscar() {
+  const q = $("#q").value.toLowerCase().trim();
+  const lista = $("#res");
+  if (!q) return (lista.hidden = true);
+  const achados = (await montarIndice())
+    .filter((x) => x.texto.includes(q))
+    .sort((a, b) => b.nome.toLowerCase().includes(q) - a.nome.toLowerCase().includes(q))
+    .slice(0, 8);
+  lista.innerHTML = achados.length
+    ? achados.map((x) => `<li><a href="#${x.id}/${x.ancora}"><b>${esc(x.nome)}</b><small>${esc(x.titulo)}${x.resumo ? " · " + esc(x.resumo.slice(0, 80)) : ""}</small></a></li>`).join("")
+    : "<li><a>Nenhum comando encontrado. Tente outro termo.</a></li>";
+  lista.hidden = false;
+}
+
+$("#q").addEventListener("input", buscar);
+$("#res").addEventListener("click", () => {
+  $("#res").hidden = true;
+  $("#q").value = "";
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "/" && document.activeElement !== $("#q")) {
+    e.preventDefault();
+    $("#q").focus();
+  } else if (e.key === "Escape") {
+    $("#res").hidden = true;
+    $("#q").blur();
+  }
+});
+$("#menu").onclick = () => document.body.classList.toggle("nav-open");
+$("#theme").onclick = () => {
+  const r = document.documentElement;
+  const escuro = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.dataset.theme = escuro ? "light" : "dark";
+  try { localStorage.setItem("tema", r.dataset.theme); } catch (e) {}
+};
+window.addEventListener("hashchange", rota);
+menu();
+rota();
+</script>
+</body>
+</html>
